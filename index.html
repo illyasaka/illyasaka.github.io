@@ -21,6 +21,11 @@
     --shadow: 0 24px 80px rgba(0,0,0,.55);
     --shadow2: 0 18px 60px rgba(0,0,0,.48);
     --radius: 22px;
+
+    /* pricing palette (old UI) */
+    --free: var(--cyan);
+    --premium: var(--vio);
+    --ultra: var(--pink);
   }
   *{box-sizing:border-box}
   html,body{height:100%}
@@ -33,11 +38,11 @@
                 radial-gradient(900px 600px at 90% 10%, rgba(139,92,246,.20), transparent 60%),
                 radial-gradient(900px 700px at 50% 110%, rgba(34,211,238,.10), transparent 60%),
                 linear-gradient(180deg, #05060a 0%, #04040a 60%, #03030a 100%);
-    background-attachment: fixed; /* ✅ unify background while scrolling */
+    background-attachment: fixed;
     overflow-x:hidden;
   }
 
-  /* ✅ subtle grain to avoid “banding / transitions” while scrolling */
+  /* subtle grain to avoid scroll banding */
   body::before{
     content:"";
     position:fixed; inset:0;
@@ -87,9 +92,13 @@
   }
   .brand small{display:block; font-weight:700; opacity:.7; letter-spacing:.2px}
   .ctaRow{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end}
-  article.card.premium a.btn { margin-top: 30px; }
-  article.card.free a.btn { margin-top: 30px; }
 
+   div.plan.free {
+    max-height: 450px;
+  }
+  div.plan.premium {
+    max-height: 450px;
+  }
   a.btn, button.btn{
     appearance:none; border:none; cursor:pointer; text-decoration:none;
     display:inline-flex; align-items:center; justify-content:center;
@@ -120,7 +129,7 @@
     border-color: rgba(255,46,166,.65);
   }
 
-  /* ✅ Topbar buttons back to “normal” size (same as All my links) */
+  /* Topbar buttons back to normal size */
   .topbar .ctaRow a.btn,
   .topbar .ctaRow button.btn{
     padding: 10px 14px;
@@ -249,6 +258,169 @@
     text-align:center;
   }
 
+  /* ======= (NEW) OLD PRICING UI STYLES ======= */
+  .sectionTitle{
+    text-align:center;
+    margin: 42px 0 16px;
+    font-size: 34px;
+    font-weight:950;
+    letter-spacing:-.3px;
+  }
+  .sectionSub{
+    text-align:center;
+    color: rgba(244,244,255,.65);
+    max-width: 72ch;
+    margin: 0 auto 28px;
+    line-height:1.6;
+    font-size:15px;
+  }
+  .pricingGrid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:18px;
+    margin-top: 18px;
+  }
+  @media (max-width: 980px){
+    .pricingGrid{ grid-template-columns: 1fr; }
+  }
+  .plan{
+    position:relative;
+    border-radius: 26px;
+    overflow:hidden;
+    border: 1px solid rgba(255,255,255,.10);
+    background: linear-gradient(180deg, rgba(12,12,18,.68), rgba(10,10,14,.55));
+    box-shadow: var(--shadow2);
+    transform: translateZ(0);
+    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+  }
+  .plan:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 30px 95px rgba(0,0,0,.65);
+    border-color: rgba(255,255,255,.18);
+  }
+  .plan:before{
+    content:"";
+    position:absolute; inset:-1px;
+    background: linear-gradient(90deg, rgba(255,255,255,.04), rgba(255,255,255,.01));
+    pointer-events:none;
+  }
+  .planHeader{
+    padding:20px 18px 14px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.01));
+  }
+  .planName{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    font-weight:950;
+    letter-spacing:.3px;
+  }
+  .planName span{ font-size:18px; }
+  .chip{
+    font-size:12px;
+    font-weight:950;
+    letter-spacing:.25px;
+    padding:6px 10px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.06);
+    color: rgba(255,255,255,.92);
+  }
+  .planPrice{
+    margin-top:10px;
+    font-size: 30px;
+    font-weight:980;
+    letter-spacing:-.5px;
+  }
+  .planPrice small{
+    font-size:14px;
+    font-weight:850;
+    color: rgba(244,244,255,.62);
+    margin-left:8px;
+  }
+  .planBody{
+    padding: 18px;
+  }
+  .list{
+    list-style:none;
+    padding:0;
+    margin:0;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    color: rgba(255,255,255,.88);
+    font-weight:700;
+  }
+  .list li{
+    display:flex; align-items:flex-start; gap:10px;
+    line-height:1.35;
+    color: rgba(244,244,255,.82);
+  }
+  .tick{
+    width:20px; height:20px;
+    border-radius:7px;
+    border:1px solid rgba(255,255,255,.14);
+    display:grid;
+    place-items:center;
+    background: rgba(255,255,255,.05);
+    flex:0 0 auto;
+    margin-top:1px;
+    font-size:12px;
+  }
+  .planCTA{
+    padding: 0 18px 20px;
+  }
+  .buy{
+    width:100%;
+    display:block;
+    text-align:center;
+    text-decoration:none;
+    border:none;
+    border-radius: 18px;
+    padding: 14px 16px;
+    font-size: 16px;
+    font-weight:980;
+    letter-spacing:.3px;
+    cursor:pointer;
+    transition: transform .18s ease, filter .18s ease;
+  }
+  .buy:hover{ transform: translateY(-1px); filter: brightness(1.06); }
+  .buy:active{ transform: translateY(0px) scale(.99); }
+
+  /* plan colors */
+  .plan.free .chip{ border-color: rgba(34,211,238,.35); background: rgba(34,211,238,.10); }
+  .plan.free .planPrice{ color: rgba(34,211,238,.95); }
+  .plan.free .buy{ background: linear-gradient(180deg, rgba(34,211,238,.65), rgba(34,211,238,.22)); color:#07101a; }
+
+  .plan.premium .chip{ border-color: rgba(139,92,246,.35); background: rgba(139,92,246,.10); }
+  .plan.premium .planPrice{ color: rgba(139,92,246,.95); }
+  .plan.premium .buy{ background: linear-gradient(180deg, rgba(139,92,246,.65), rgba(139,92,246,.22)); color:#0b0613; }
+
+  .plan.ultra{
+    border-color: rgba(255,46,166,.32);
+    box-shadow: 0 28px 100px rgba(255,46,166,.12), var(--shadow2);
+  }
+  .plan.ultra:after{
+    z-index: 999;
+    content:"MOST WANTED";
+    position:absolute;
+    top:16px; right:-62px;
+    transform: rotate(32deg);
+    background: linear-gradient(90deg, rgba(255,42,166,.95), rgba(184,77,255,.85));
+    color:white;
+    font-weight:950;
+    letter-spacing:.4px;
+    padding:8px 80px;
+    border-radius:999px;
+    box-shadow: 0 18px 55px rgba(255,42,166,.20);
+    font-size:12px;
+    opacity:.95;
+  }
+  .plan.ultra .chip{ border-color: rgba(255,46,166,.45); background: rgba(255,46,166,.12); }
+  .plan.ultra .planPrice{ color: rgba(255,46,166,.98); }
+  .plan.ultra .buy{ background: linear-gradient(180deg, rgba(255,46,166,.85), rgba(255,46,166,.22)); color:#19000f; }
+
+  /* ======= (rest of your current CSS) ======= */
+
   .cards{
     display:grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -299,7 +471,7 @@
   .price small{font-size: 14px; opacity:.72; font-weight:800; letter-spacing:.2px}
   .cardBody{padding: 14px 18px 18px;}
   ul{margin: 0; padding-left: 18px; color: rgba(244,244,255,.82); line-height:1.55}
-  li{margin: 7px 0}
+  li{margin: 3px 0}
   .cardCTA{ display:flex; justify-content:center; padding: 14px 18px 18px; }
   .cardCTA a{
     width: 100%;
@@ -501,8 +673,6 @@
   .addr{
     display:flex; align-items:stretch; gap:10px; flex-wrap:wrap;
   }
-
-  /* ✅ embed-style address display (no ugly scrollbar / no huge line) */
   .addr .mono{
     flex: 1 1 260px;
     margin:0;
@@ -510,36 +680,30 @@
     text-overflow:ellipsis;
     white-space:nowrap;
   }
-
   .addr button.btn{ flex: 0 0 auto; margin-top:0 !important; }
   button.btn.copied{
     background: rgba(34,211,238,.12);
     border-color: rgba(34,211,238,.30);
   }
 
-  /* ===== DEMO COUNTDOWN TIMER (added) ===== */
+  /* ===== DEMO COUNTDOWN TIMER ===== */
   .demoTimer{
     position:absolute;
     top:14px;
     right:14px;
     z-index:20;
-
     font-weight:1000;
     font-size:22px;
     letter-spacing:2px;
-
     padding:8px 14px;
     border-radius:14px;
-
     background:rgba(0,0,0,.45);
     border:1px solid rgba(255,255,255,.15);
     backdrop-filter: blur(10px);
-
     box-shadow:0 10px 30px rgba(0,0,0,.5);
     user-select:none;
     pointer-events:none;
   }
-
   .demoTimer.boom{ animation: boom .55s ease; }
   @keyframes boom{
     0%{transform:scale(1)}
@@ -547,7 +711,6 @@
     70%{transform:scale(.9)}
     100%{transform:scale(1)}
   }
-
   .demoTimer.urgent{ animation:pulse 1s infinite; }
   @keyframes pulse{
     0%{box-shadow:0 0 0 0 rgba(255,46,166,.7)}
@@ -597,78 +760,105 @@
       </div>
       <div class="demoStage" id="stage">
         <div class="stageOverlay"></div>
-
-        <!-- ✅ Added countdown timer (top-right inside demo) -->
         <div id="demoTimer" class="demoTimer">05:00</div>
-
         <div class="stageWatermark">ILLYASAKA • DEMO</div>
       </div>
     </div>
   </section>
 
-  <section class="section" id="editions">
-    <h2>Choose your edition</h2>
-
-    <div class="cards">
-      <article class="card free">
-        <div class="cardTop">
-          <div class="badge"><span class="spark"></span> Normal</div>
-          <div class="price">$0 <small>Free</small></div>
-        </div>
-        <div class="cardBody">
-          <ul>
-            <li>Core immersive experience</li>
-            <li><b>500</b> hentai / porn images + <b>40</b> video</li>
-            <li><b>10</b> audio</li>
-            <li><b>50</b> text</li>
-            <li>No Custom Setting</li>
-          </ul>
-        </div>
-        <div class="cardCTA">
-          <a class="btn" href="https://gofile.io/d/yonFLt" target="_blank" rel="noreferrer">Download Free</a>
-        </div>
-      </article>
-
-      <article class="card premium">
-        <div class="cardTop">
-          <div class="badge"><span class="spark"></span> Premium</div>
-          <div class="price">$25 <small>Upgrade</small></div>
-        </div>
-        <div class="cardBody">
-          <ul>
-            <li>Extended immersion + partial control</li>
-            <li><b>5,000</b> images + <b>100</b> video</li>
-            <li><b>60</b> audio</li>
-            <li><b>300</b> text</li>
-            <li>Custom Setting (partial)</li>
-          </ul>
-        </div>
-        <div class="cardCTA">
-          <a class="btn" href="https://throne.com/illyasaka" target="_blank" rel="noreferrer">Upgrade</a>
-        </div>
-      </article>
-
-      <article class="card ultra">
-        <div class="cardTop">
-          <div class="badge"><span class="spark"></span> Ultra Premium</div>
-          <div class="price">$1000+ <small>Ultimate</small></div>
-        </div>
-        <div class="cardBody">
-          <ul>
-            <li>Full unlimited experience</li>
-            <li><b>20,000</b> images + <b>250</b> video</li>
-            <li><b>60</b> hentai audio + all text in audio</li>
-            <li><b>1,000</b> text</li>
-            <li>Custom Setting (all)</li>
-            <li>Add your own media (images/videos/audio)</li>
-          </ul>
-        </div>
-        <div class="cardCTA">
-          <a class="btn" href="https://throne.com/illyasaka" target="_blank" rel="noreferrer">Get Ultra</a>
-        </div>
-      </article>
+  <!-- ======= EDITIONS (replaced with OLD UI) ======= -->
+  <section id="editions">
+    <h2 class="sectionTitle">Choose your Edition</h2>
+    <div class="sectionSub">
+      Three editions. Three intensities. Ultra Premium is engineered to feel “unfair” — higher variety, higher control, deeper immersion.
     </div>
 
+    <div class="pricingGrid">
+      <!-- FREE -->
+      <div class="plan free">
+        <div class="planHeader">
+          <div class="planName">
+            <span>Normal</span>
+            <span class="chip">FREE</span>
+          </div>
+          <div class="planPrice">$0 <small>default build</small></div>
+        </div>
+        <div class="planBody">
+          <ul class="list">
+            <li><span class="tick">✓</span> 500 hentai / porn images</li>
+            <li><span class="tick">✓</span> 40 videos</li>
+            <li><span class="tick">✓</span> 10 audio</li>
+            <li><span class="tick">✓</span> 50 texts</li>
+            <li><span class="tick">✓</span> No custom settings</li>
+          </ul>
+        </div>
+        <div class="planCTA">
+          <a class="buy" href="https://gofile.io/d/yonFLt" target="_blank" rel="noreferrer">Download Free</a>
+        </div>
+      </div>
+
+      <!-- PREMIUM -->
+      <div class="plan premium">
+        <div class="planHeader">
+          <div class="planName">
+            <span>Premium</span>
+            <span class="chip">POPULAR</span>
+          </div>
+          <div class="planPrice">$25 <small>upgrade</small></div>
+        </div>
+        <div class="planBody">
+          <ul class="list">
+            <li><span class="tick">✓</span> 5,000 images</li>
+            <li><span class="tick">✓</span> 100 videos</li>
+            <li><span class="tick">✓</span> 30 audio</li>
+            <li><span class="tick">✓</span> 300 texts</li>
+            <li><span class="tick">✓</span> Custom settings (partial)</li>
+          </ul>
+        </div>
+        <div class="planCTA">
+          <a class="buy" href="https://throne.com/illyasaka/item/99278bbb-d14d-4c34-abd1-c68521cfaebb" target="_blank" rel="noreferrer">Upgrade</a>
+        </div>
+      </div>
+
+      <!-- ULTRA -->
+      <div class="plan ultra">
+        <div class="planHeader">
+          <div class="planName">
+            <span>Ultra Premium</span>
+            <span class="chip">BEST VALUE</span>
+          </div>
+          <div class="planPrice">$1000+ <small>exclusive</small></div>
+        </div>
+        <div class="planBody">
+          <ul class="list">
+<li><span class="tick">✓</span> 30,000 images</li>
+<li><span class="tick">✓</span> 500 videos</li>
+<li><span class="tick">✓</span> 200 immersive audio</li>
+<li><span class="tick">✓</span> 1,000 dynamic texts</li>
+<li><span class="tick">✓</span> 200 text-to-audio lines</li>
+<li><span class="tick">✓</span> New themes & UI styles</li>
+<li><span class="tick">✓</span> Monthly content drops (images / videos / sounds)</li>
+
+   <li><span class="tick">✓</span> Lifetime Access (one-time purchase, forever unlocked)</li>
+<li><span class="tick">✓</span> Founder / VIP Status</li>
+<li><span class="tick">✓</span> Direct Contact (priority DM support)</li>
+<li><span class="tick">✓</span> Early / Beta Access to all new features</li>
+<li><span class="tick">✓</span> Suggest future features</li>
+
+<li><span class="tick">✓</span> Custom Settings (ALL unlocked)</li>
+<li><span class="tick">✓</span> Advanced Modes (Extreme / Chaos / Hypnosis+)</li>
+<li><span class="tick">✓</span> Add your own images / videos / audio</li>
+<li><span class="tick">✓</span> And many more future perks included automatically</li>
+
+          </ul>
+        </div>
+        <div class="planCTA">
+          <a class="buy" href="https://throne.com/illyasaka/item/58481eaf-723c-4039-b815-4c61a145e62e" target="_blank" rel="noreferrer">Get Ultra</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- keep your existing CTA -->
     <div style="margin-top:18px; display:flex; justify-content:center;">
       <a class="btn primary" href="https://x.com/Illyasaka" target="_blank" rel="noreferrer">
         💎 Get Custom Pack (DM me on X)
@@ -876,7 +1066,6 @@
   </footer>
 </div>
 
-<!-- ✅ JS file name updated -->
-<script src="index.js"></script>
+<script src="Illyasaka Banner 2.js"></script>
 </body>
 </html>
