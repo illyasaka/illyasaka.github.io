@@ -3,1062 +3,880 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Illyasaka — Autodrain Experience</title>
-
+<title>Illyasaka - Autodrain. Immersion.</title>
 <style>
   :root{
-    --bg0:#05050a;
-    --bg1:#070712;
-    --card:#0d0d16cc;
-    --text:#f6f6fb;
-    --muted:#a6a6b4;
-    --line:#ffffff14;
-
-    --pink:#ff2aa6;
-    --pink2:#c700ff;
-
-    --free:#3aa3ff;
-    --premium:#b84dff;
-    --ultra:#ff2aa6;
-
-    --shadow: 0 30px 90px rgba(0,0,0,.65);
-    --shadowSoft: 0 18px 70px rgba(0,0,0,.45);
-
+    --bg:#05060a;
+    --panel:rgba(12,12,18,.72);
+    --panel2:rgba(10,10,14,.62);
+    --stroke:rgba(255, 46, 166, .35);
+    --stroke2:rgba(255,255,255,.10);
+    --pink:#ff2ea6;
+    --hot:#ff3bd1;
+    --vio:#8b5cf6;
+    --cyan:#22d3ee;
+    --amber:#f59e0b;
+    --text:#f4f4ff;
+    --muted:rgba(244,244,255,.72);
+    --shadow: 0 24px 80px rgba(0,0,0,.55);
+    --shadow2: 0 18px 60px rgba(0,0,0,.48);
     --radius: 22px;
-    --radius2: 28px;
   }
-
   *{box-sizing:border-box}
   html,body{height:100%}
+  html{scroll-behavior:smooth}
   body{
     margin:0;
-    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
     color:var(--text);
-    background:
-      radial-gradient(1200px 900px at 18% 15%, rgba(255,42,166,.18), transparent 55%),
-      radial-gradient(1000px 800px at 82% 35%, rgba(184,77,255,.16), transparent 60%),
-      radial-gradient(900px 700px at 60% 90%, rgba(58,163,255,.12), transparent 60%),
-      linear-gradient(180deg, var(--bg0), var(--bg1));
+    background: radial-gradient(1200px 700px at 20% -10%, rgba(255,46,166,.26), transparent 55%),
+                radial-gradient(900px 600px at 90% 10%, rgba(139,92,246,.20), transparent 60%),
+                radial-gradient(900px 700px at 50% 110%, rgba(34,211,238,.10), transparent 60%),
+                linear-gradient(180deg, #05060a 0%, #04040a 60%, #03030a 100%);
+    background-attachment: fixed; /* ✅ unify background while scrolling */
     overflow-x:hidden;
   }
 
-  /* animated ambient */
-  .ambient{
-    position:fixed; inset:-20%;
-    background:
-      radial-gradient(closest-side at 20% 30%, rgba(255,42,166,.16), transparent 60%),
-      radial-gradient(closest-side at 80% 40%, rgba(184,77,255,.14), transparent 60%),
-      radial-gradient(closest-side at 55% 75%, rgba(58,163,255,.10), transparent 60%);
-    filter: blur(35px);
-    animation: drift 16s ease-in-out infinite alternate;
-    pointer-events:none;
-    z-index:-1;
-    opacity:.8;
-  }
-  @keyframes drift{
-    0%{ transform: translate3d(-2%, -1%, 0) scale(1.02) rotate(-1deg); }
-    100%{ transform: translate3d(2%, 1%, 0) scale(1.06) rotate(1deg); }
-  }
-
-  .container{
-    width:min(1180px, 92vw);
-    margin:0 auto;
-  }
-
-  /* top nav */
-  .nav{
-    position:sticky;
-    top:0;
-    z-index:50;
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    background: linear-gradient(180deg, rgba(5,5,10,.72), rgba(5,5,10,.40));
-    border-bottom: 1px solid var(--line);
-  }
-  .navInner{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:14px 0;
-  }
-  .brand{
-    display:flex; align-items:center; gap:12px;
-    font-weight:900;
-    letter-spacing:.4px;
-  }
-  .logoDot{
-    width:12px;height:12px;border-radius:999px;
-    background: linear-gradient(90deg, var(--pink), var(--pink2));
-    box-shadow: 0 0 24px rgba(255,42,166,.6);
-  }
-  .navLinks{
-    display:flex; gap:18px; align-items:center;
-    color:var(--muted);
-    font-weight:650;
-    font-size:14px;
-  }
-  .navLinks a{
-    color:inherit; text-decoration:none;
-    padding:8px 10px;
-    border-radius:12px;
-    transition:.18s;
-  }
-  .navLinks a:hover{
-    color:var(--text);
-    background: rgba(255,255,255,.06);
-  }
-  .navCTA{
-    display:flex; gap:10px; align-items:center;
-  }
-  .btn{
-    border:1px solid var(--line);
-    background: rgba(255,255,255,.06);
-    color:var(--text);
-    padding:10px 14px;
-    border-radius:14px;
-    font-weight:800;
-    letter-spacing:.2px;
-    cursor:pointer;
-    transition:.18s transform, .18s background, .18s box-shadow, .18s border-color;
-  }
-  .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.10); }
-  .btnPrimary{
-    border-color: rgba(255,42,166,.35);
-    background: linear-gradient(180deg, rgba(255,42,166,.35), rgba(255,42,166,.14));
-    box-shadow: 0 18px 55px rgba(255,42,166,.18);
-  }
-  .btnPrimary:hover{
-    border-color: rgba(255,42,166,.55);
-    box-shadow: 0 18px 70px rgba(255,42,166,.24);
-  }
-
-  /* hero */
-  .hero{
-    padding:54px 0 10px;
-  }
-  .heroGrid{
-    display:grid;
-    grid-template-columns: 1.15fr .85fr;
-    gap:26px;
-    align-items:stretch;
-  }
-  @media (max-width: 980px){
-    .heroGrid{ grid-template-columns: 1fr; }
-  }
-
-  .headline{
-    font-size: clamp(40px, 5vw, 62px);
-    line-height:1.02;
-    margin:0;
-    font-weight:950;
-    letter-spacing:-0.5px;
-  }
-  .gradientText{
-    background: linear-gradient(90deg, var(--pink), #fff 55%, var(--free));
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
-  }
-  .sub{
-    margin-top:14px;
-    font-size: 17px;
-    line-height:1.6;
-    color: var(--muted);
-    max-width: 58ch;
-  }
-  .heroBadges{
-    display:flex; flex-wrap:wrap; gap:10px;
-    margin-top:18px;
-  }
-  .badge{
-    border:1px solid var(--line);
-    background: rgba(255,255,255,.05);
-    color:var(--text);
-    padding:8px 10px;
-    border-radius:999px;
-    font-weight:800;
-    font-size:13px;
-    letter-spacing:.2px;
-  }
-  .badgeGlow{
-    border-color: rgba(255,42,166,.35);
-    box-shadow: 0 0 0 3px rgba(255,42,166,.08);
-  }
-
-  .heroCard{
-    border:1px solid var(--line);
-    background: rgba(10,10,16,.55);
-    border-radius: var(--radius2);
-    box-shadow: var(--shadowSoft);
-    overflow:hidden;
-    position:relative;
-  }
-  .heroCard:before{
+  /* ✅ subtle grain to avoid “banding / transitions” while scrolling */
+  body::before{
     content:"";
-    position:absolute; inset:-2px;
-    background: linear-gradient(90deg, rgba(255,42,166,.55), rgba(184,77,255,.35), rgba(58,163,255,.35));
-    filter: blur(14px);
-    opacity:.35;
-    pointer-events:none;
-  }
-  .heroCardInner{
-    position:relative;
-    padding:16px;
-  }
-
-  /* DEMO */
-  .demoStage{
-    position:relative;
-    height: min(70vh, 620px);
-    border-radius: 24px;
-    overflow:hidden;
-    background:
-      radial-gradient(600px 400px at 30% 20%, rgba(255,42,166,.20), transparent 60%),
-      radial-gradient(600px 400px at 75% 70%, rgba(58,163,255,.14), transparent 60%),
-      #070711;
-    border: 1px solid rgba(255,255,255,.10);
-    box-shadow: var(--shadow);
-  }
-
-  .demoTopBar{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:12px;
-    padding:14px;
-    border-bottom: 1px solid rgba(255,255,255,.08);
-    background: linear-gradient(180deg, rgba(10,10,18,.65), rgba(10,10,18,.25));
-  }
-  .demoTitle{
-    display:flex; flex-direction:column; gap:2px;
-  }
-  .demoTitle b{ font-size:14px; letter-spacing:.4px; }
-  .demoTitle span{ font-size:12px; color:var(--muted); }
-
-  .demoControls{
-    display:flex; gap:10px; flex-wrap:wrap;
-    align-items:center;
-    justify-content:flex-end;
-  }
-  .pill{
-    border:1px solid rgba(255,255,255,.14);
-    background: rgba(255,255,255,.06);
-    border-radius: 999px;
-    padding:8px 12px;
-    font-weight:850;
-    font-size:12px;
-    letter-spacing:.25px;
-    color:var(--text);
-    cursor:pointer;
-    transition:.18s;
-  }
-  .pill:hover{ transform: translateY(-1px); background: rgba(255,255,255,.10); }
-  .pillPrimary{
-    border-color: rgba(255,42,166,.42);
-    background: linear-gradient(180deg, rgba(255,42,166,.35), rgba(255,42,166,.12));
-    box-shadow: 0 18px 60px rgba(255,42,166,.18);
-  }
-
-  .demoCanvas{
-    position:absolute; inset:0;
-    pointer-events:none;
-  }
-
-  .demoHint{
-    position:absolute;
-    left:18px; bottom:18px;
-    padding:10px 12px;
-    border-radius: 14px;
-    border:1px solid rgba(255,255,255,.12);
-    background: rgba(0,0,0,.35);
-    backdrop-filter: blur(12px);
-    color: rgba(255,255,255,.86);
-    font-weight:750;
-    font-size:12px;
-    letter-spacing:.2px;
-  }
-
-  /* floating media */
-  .media{
-    position:absolute;
-    border-radius:16px;
-    box-shadow: 0 22px 70px rgba(0,0,0,.55);
-    border: 1px solid rgba(255,255,255,.12);
-    opacity:0;
-    transform: translateZ(0) scale(.85);
-    animation: mediaIn .45s ease forwards;
-    will-change: transform, opacity;
-  }
-  @keyframes mediaIn{
-    to{ opacity:1; transform: translateZ(0) scale(1); }
-  }
-  .media.fadeOut{
-    transition: opacity 1s linear, transform 1s ease;
-    opacity:0 !important;
-    transform: scale(1.05) translateY(-14px);
-  }
-
-  /* text pop */
-  .tpop{
-    position:absolute;
-    font-weight:950;
-    letter-spacing:.4px;
-    text-transform:uppercase;
-    pointer-events:none;
-    filter: drop-shadow(0 20px 40px rgba(0,0,0,.6));
-    transform: translate(-50%,-50%) scale(.6);
-    opacity:0;
-    animation: tIn 420ms ease forwards;
-    will-change: transform, opacity;
-  }
-  @keyframes tIn{ to{ opacity:1; transform: translate(-50%,-50%) scale(1); } }
-  .tpop.out{
-    transition: opacity .6s ease, transform .6s ease, filter .6s ease;
-    opacity:0;
-    transform: translate(-50%,-50%) scale(1.12) rotate(-1deg);
-    filter: blur(10px);
-  }
-  .stroke{
-    -webkit-text-stroke: 2px rgba(0,0,0,.45);
-    text-shadow: 0 0 24px rgba(255,42,166,.35);
-  }
-
-  /* pricing */
-  .sectionTitle{
-    text-align:center;
-    margin: 42px 0 16px;
-    font-size: 34px;
-    font-weight:950;
-    letter-spacing:-.3px;
-  }
-  .sectionSub{
-    text-align:center;
-    color:var(--muted);
-    max-width: 72ch;
-    margin: 0 auto 28px;
-    line-height:1.6;
-    font-size:15px;
-  }
-
-  .pricingGrid{
-    display:grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap:18px;
-    margin-top: 18px;
-  }
-  @media (max-width: 980px){
-    .pricingGrid{ grid-template-columns: 1fr; }
-  }
-
-  .plan{
-    position:relative;
-    border-radius: 26px;
-    overflow:hidden;
-    border: 1px solid rgba(255,255,255,.10);
-    background: rgba(10,10,16,.55);
-    box-shadow: var(--shadowSoft);
-    transform: translateZ(0);
-    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
-  }
-  .plan:hover{
-    transform: translateY(-6px);
-    box-shadow: 0 30px 95px rgba(0,0,0,.65);
-    border-color: rgba(255,255,255,.18);
-  }
-  .plan:before{
-    content:"";
-    position:absolute; inset:-1px;
-    background: linear-gradient(90deg, rgba(255,255,255,.04), rgba(255,255,255,.01));
-    pointer-events:none;
-  }
-  .planHeader{
-    padding:20px 18px 14px;
-    border-bottom: 1px solid rgba(255,255,255,.08);
-    background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.01));
-  }
-  .planName{
-    display:flex; align-items:center; justify-content:space-between; gap:10px;
-    font-weight:950;
-    letter-spacing:.3px;
-  }
-  .planName span{ font-size:18px; }
-  .chip{
-    font-size:12px;
-    font-weight:950;
-    letter-spacing:.25px;
-    padding:6px 10px;
-    border-radius:999px;
-    border:1px solid rgba(255,255,255,.14);
-    background: rgba(255,255,255,.06);
-    color: rgba(255,255,255,.92);
-  }
-  .planPrice{
-    margin-top:10px;
-    font-size: 30px;
-    font-weight:980;
-    letter-spacing:-.5px;
-  }
-  .planPrice small{
-    font-size:14px;
-    font-weight:850;
-    color: var(--muted);
-    margin-left:8px;
-  }
-  .planBody{
-    padding: 18px;
-  }
-  .list{
-    list-style:none;
-    padding:0;
-    margin:0;
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-    color: rgba(255,255,255,.88);
-    font-weight:700;
-  }
-  .list li{
-    display:flex; align-items:flex-start; gap:10px;
-    line-height:1.35;
-    color: rgba(255,255,255,.84);
-  }
-  .tick{
-    width:20px; height:20px;
-    border-radius:7px;
-    border:1px solid rgba(255,255,255,.14);
-    display:grid;
-    place-items:center;
-    background: rgba(255,255,255,.05);
-    flex:0 0 auto;
-    margin-top:1px;
-    font-size:12px;
-  }
-  .planCTA{
-    padding: 0 18px 20px;
-  }
-  .buy{
-    width:100%;
-    border:none;
-    border-radius: 18px;
-    padding: 14px 16px;
-    font-size: 16px;
-    font-weight:980;
-    letter-spacing:.3px;
-    cursor:pointer;
-    transition: transform .18s ease, filter .18s ease;
-  }
-  .buy:hover{ transform: translateY(-1px); filter: brightness(1.06); }
-  .buy:active{ transform: translateY(0px) scale(.99); }
-
-  /* plan colors */
-  .plan.free .chip{ border-color: rgba(58,163,255,.35); background: rgba(58,163,255,.10); }
-  .plan.free .planPrice{ color: rgba(58,163,255,.95); }
-  .plan.free .buy{ background: linear-gradient(180deg, rgba(58,163,255,.65), rgba(58,163,255,.22)); color:#07101a; }
-
-  .plan.premium .chip{ border-color: rgba(184,77,255,.35); background: rgba(184,77,255,.10); }
-  .plan.premium .planPrice{ color: rgba(184,77,255,.95); }
-  .plan.premium .buy{ background: linear-gradient(180deg, rgba(184,77,255,.65), rgba(184,77,255,.22)); color:#0b0613; }
-
-  .plan.ultra{
-    border-color: rgba(255,42,166,.32);
-    box-shadow: 0 28px 100px rgba(255,42,166,.12), var(--shadowSoft);
-  }
-  .plan.ultra:after{
-    content:"MOST WANTED";
-    position:absolute;
-    top:16px; right:-62px;
-    transform: rotate(32deg);
-    background: linear-gradient(90deg, rgba(255,42,166,.95), rgba(184,77,255,.85));
-    color:white;
-    font-weight:950;
-    letter-spacing:.4px;
-    padding:8px 80px;
-    border-radius:999px;
-    box-shadow: 0 18px 55px rgba(255,42,166,.20);
-    font-size:12px;
-    opacity:.95;
-  }
-  .plan.ultra .chip{ border-color: rgba(255,42,166,.45); background: rgba(255,42,166,.12); }
-  .plan.ultra .planPrice{ color: rgba(255,42,166,.98); }
-  .plan.ultra .buy{ background: linear-gradient(180deg, rgba(255,42,166,.85), rgba(255,42,166,.22)); color:#19000f; }
-
-  /* content blocks */
-  .split{
-    display:grid;
-    grid-template-columns: 1fr 1fr;
-    gap:18px;
-    margin-top: 22px;
-  }
-  @media (max-width: 980px){
-    .split{ grid-template-columns: 1fr; }
-  }
-  .panel{
-    border:1px solid rgba(255,255,255,.10);
-    background: rgba(10,10,16,.50);
-    border-radius: var(--radius);
-    padding: 18px;
-    box-shadow: var(--shadowSoft);
-  }
-  .panel h3{
-    margin:0 0 10px;
-    font-size: 16px;
-    font-weight:950;
-    letter-spacing:.2px;
-  }
-  .panel p{ margin:0; color:var(--muted); line-height:1.6; font-size:14px; }
-  .miniGrid{
-    display:grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap:12px;
-    margin-top:12px;
-  }
-  @media (max-width: 980px){
-    .miniGrid{ grid-template-columns: 1fr; }
-  }
-  .mini{
-    border:1px solid rgba(255,255,255,.10);
-    background: rgba(255,255,255,.04);
-    border-radius: 18px;
-    padding: 12px;
-  }
-  .mini b{ display:block; font-size:13px; }
-  .mini span{ display:block; margin-top:6px; color:var(--muted); font-size:13px; line-height:1.45; }
-
-  /* FAQ */
-  details{
-    border:1px solid rgba(255,255,255,.10);
-    background: rgba(10,10,16,.45);
-    border-radius: 18px;
-    padding: 14px 16px;
-  }
-  details + details{ margin-top:12px; }
-  summary{
-    cursor:pointer;
-    font-weight:900;
-    letter-spacing:.2px;
-    outline:none;
-  }
-  details p{ margin:10px 0 0; color:var(--muted); }
-
-  /* footer */
-  .footer{
-    margin-top: 70px;
-    padding: 60px 0 80px;
-    border-top: 1px solid var(--line);
-    text-align:center;
-    color: rgba(255,255,255,.55);
-    font-size: 13px;
-  }
-  .footer b{ color: rgba(255,255,255,.85); }
-
-  /* subtle noise */
-  .noise{
     position:fixed; inset:0;
     pointer-events:none;
-    opacity:.08;
+    background:
+      radial-gradient(circle at 20% 10%, rgba(255,255,255,.04), transparent 35%),
+      radial-gradient(circle at 80% 30%, rgba(255,255,255,.03), transparent 40%),
+      radial-gradient(circle at 55% 85%, rgba(255,255,255,.025), transparent 45%);
+    opacity:.28;
     mix-blend-mode: overlay;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
-    background-size: 220px 220px;
+    z-index:-2;
+  }
+
+  .glow{
+    position:fixed; inset:-40vmax;
+    background:
+      radial-gradient(closest-side at 30% 30%, rgba(255,46,166,.09), transparent 65%),
+      radial-gradient(closest-side at 70% 40%, rgba(139,92,246,.07), transparent 70%),
+      radial-gradient(closest-side at 55% 75%, rgba(34,211,238,.05), transparent 70%);
+    filter: blur(18px);
+    pointer-events:none;
+    animation: drift 16s ease-in-out infinite alternate;
+    z-index:-1;
+  }
+  @keyframes drift{
+    from{ transform: translate3d(-1.5%, -1%, 0) scale(1.02); }
+    to  { transform: translate3d( 1.2%,  1.6%, 0) scale(1.04); }
+  }
+
+  .wrap{max-width:1200px; margin:0 auto; padding: 34px 18px 90px;}
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:14px;
+    padding: 10px 0 22px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    font-weight:900; letter-spacing:.4px;
+  }
+  .logo{
+    width:38px; height:38px; border-radius:14px;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 50%),
+      linear-gradient(180deg, rgba(255,46,166,.9), rgba(139,92,246,.75));
+    box-shadow: 0 18px 40px rgba(255,46,166,.18);
+    border:1px solid rgba(255,255,255,.14);
+  }
+  .brand small{display:block; font-weight:700; opacity:.7; letter-spacing:.2px}
+  .ctaRow{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end}
+  article.card.premium a.btn { margin-top: 30px; }
+  article.card.free a.btn { margin-top: 30px; }
+
+  a.btn, button.btn{
+    appearance:none; border:none; cursor:pointer; text-decoration:none;
+    display:inline-flex; align-items:center; justify-content:center;
+    gap:10px;
+    padding: 12px 16px;
+    border-radius: 14px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.12);
+    color: var(--text);
+    box-shadow: 0 10px 26px rgba(0,0,0,.25);
+    transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+    font-weight:800; letter-spacing:.2px;
+    white-space:nowrap;
+  }
+  a.btn:hover, button.btn:hover{
+    transform: translateY(-1px);
+    background: rgba(255,255,255,.09);
+    border-color: rgba(255,255,255,.18);
+    box-shadow: 0 18px 44px rgba(0,0,0,.38);
+  }
+  .btn.primary{
+    background: linear-gradient(180deg, rgba(255,46,166,.38), rgba(255,46,166,.18));
+    border-color: rgba(255,46,166,.45);
+    box-shadow: 0 18px 60px rgba(255,46,166,.15), 0 18px 60px rgba(0,0,0,.45);
+  }
+  .btn.primary:hover{
+    background: linear-gradient(180deg, rgba(255,46,166,.52), rgba(255,46,166,.22));
+    border-color: rgba(255,46,166,.65);
+  }
+
+  /* ✅ Topbar buttons back to “normal” size (same as All my links) */
+  .topbar .ctaRow a.btn,
+  .topbar .ctaRow button.btn{
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+
+  .hero{
+    text-align:center;
+    padding: 22px 0 10px;
+  }
+  .kicker{
+    display:inline-flex; align-items:center; gap:10px;
+    padding: 9px 14px;
+    border-radius: 999px;
+    border:1px solid rgba(255,46,166,.35);
+    background: rgba(255,46,166,.08);
+    box-shadow: 0 14px 40px rgba(255,46,166,.12);
+    font-weight:900; letter-spacing:.6px;
+    text-transform:uppercase; font-size:12px;
+  }
+  .dot{
+    width:10px; height:10px; border-radius:999px;
+    background: rgba(255,46,166,.95);
+    box-shadow: 0 0 18px rgba(255,46,166,.55);
+  }
+  h1{
+    margin: 16px 0 10px;
+    font-size: clamp(34px, 5.4vw, 62px);
+    line-height:1.02;
+    letter-spacing: -.8px;
+  }
+  .sub{
+    margin: 0 auto;
+    max-width: 920px;
+    font-size: clamp(14px, 1.6vw, 18px);
+    color: var(--muted);
+    line-height:1.55;
+  }
+
+  .demoWrap{
+    margin: 28px auto 0;
+    max-width: 1120px;
+  }
+  .demoCard{
+    border-radius: var(--radius);
+    border:1px solid rgba(255,46,166,.30);
+    background: linear-gradient(180deg, rgba(12,12,18,.78), rgba(10,10,14,.60));
+    box-shadow: var(--shadow);
+    overflow:hidden;
+  }
+  .demoHead{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:12px;
+    padding: 16px 18px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .demoTitle{
+    display:flex; align-items:center; gap:10px;
+    font-weight:900;
+    letter-spacing:.2px;
+  }
+  .pill{
+    display:inline-flex; align-items:center; gap:8px;
+    padding: 7px 12px;
+    border-radius: 999px;
+    border:1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.05);
+    color: rgba(244,244,255,.85);
+    font-weight:800;
+    font-size:12px;
+  }
+  .pill b{color:var(--pink)}
+  .demoControls{
+    display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;
+  }
+  .btn.big{
+    padding: 14px 18px;
+    border-radius: 16px;
+    font-size: 14px;
+  }
+  .btn.start{
+    background: linear-gradient(180deg, rgba(255,46,166,.52), rgba(255,46,166,.20));
+    border-color: rgba(255,46,166,.65);
+    box-shadow: 0 18px 60px rgba(255,46,166,.18), 0 18px 60px rgba(0,0,0,.45);
+  }
+  .btn.stop{
+    background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+    border-color: rgba(255,255,255,.16);
+  }
+  .demoStage{
+    position:relative;
+    height: min(62vh, 560px);
+    background: radial-gradient(700px 400px at 50% 30%, rgba(255,46,166,.16), transparent 62%),
+                radial-gradient(900px 500px at 70% 80%, rgba(139,92,246,.12), transparent 70%),
+                linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.55));
+    overflow:hidden;
+  }
+  .stageOverlay{
+    position:absolute; inset:0;
+    pointer-events:none;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(255,255,255,.07), transparent 60%),
+      linear-gradient(180deg, rgba(255,46,166,.06), rgba(0,0,0,.0));
+    mix-blend-mode: screen;
+    opacity:.6;
+  }
+  .stageWatermark{
+    position:absolute; right:16px; bottom:14px;
+    font-weight:900; letter-spacing:.8px;
+    color: rgba(244,244,255,.65);
+    opacity:.55;
+    text-transform:uppercase;
+    font-size: 12px;
+    padding: 8px 10px;
+    border-radius: 999px;
+    border:1px solid rgba(255,255,255,.10);
+    background: rgba(0,0,0,.22);
+    backdrop-filter: blur(10px);
+  }
+
+  .section{ margin-top: 40px; }
+  .section h2{
+    font-size: clamp(22px, 2.6vw, 34px);
+    margin: 0 0 16px;
+    letter-spacing: -.4px;
+    text-align:center;
+  }
+
+  .cards{
+    display:grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+  }
+  @media (max-width: 980px){
+    .cards{ grid-template-columns: 1fr; }
+    .ctaRow{justify-content:center}
+  }
+  .card{
+    border-radius: 26px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.10);
+    background: linear-gradient(180deg, rgba(12,12,18,.68), rgba(10,10,14,.55));
+    box-shadow: var(--shadow2);
+    position:relative;
+    transform: translateZ(0);
+    transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+  }
+  .card:hover{
+    transform: translateY(-3px);
+    border-color: rgba(255,255,255,.18);
+    box-shadow: 0 26px 90px rgba(0,0,0,.58);
+  }
+  .cardTop{
+    padding: 18px 18px 14px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  .badge{
+    display:inline-flex; align-items:center; gap:8px;
+    padding: 7px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight:900;
+    letter-spacing:.4px;
+    text-transform:uppercase;
+    border:1px solid rgba(255,255,255,.16);
+    background: rgba(255,255,255,.06);
+  }
+  .badge .spark{width:10px;height:10px;border-radius:999px;background:rgba(255,255,255,.85)}
+  .price{
+    margin-top: 10px;
+    font-size: 34px;
+    font-weight: 950;
+    letter-spacing: -0.8px;
+  }
+  .price small{font-size: 14px; opacity:.72; font-weight:800; letter-spacing:.2px}
+  .cardBody{padding: 14px 18px 18px;}
+  ul{margin: 0; padding-left: 18px; color: rgba(244,244,255,.82); line-height:1.55}
+  li{margin: 7px 0}
+  .cardCTA{ display:flex; justify-content:center; padding: 14px 18px 18px; }
+  .cardCTA a{
+    width: 100%;
+    text-align:center;
+    padding: 14px 16px;
+    border-radius: 16px;
+    font-weight: 950;
+    letter-spacing:.4px;
+  }
+
+  .free{border-color: rgba(34,211,238,.22)}
+  .free .badge{border-color: rgba(34,211,238,.40); background: rgba(34,211,238,.08)}
+  .free .badge .spark{background: rgba(34,211,238,.95); box-shadow:0 0 16px rgba(34,211,238,.55)}
+  .free .cardCTA a{border:1px solid rgba(34,211,238,.55); background: linear-gradient(180deg, rgba(34,211,238,.22), rgba(34,211,238,.08))}
+  .free .cardCTA a:hover{border-color: rgba(34,211,238,.85); background: linear-gradient(180deg, rgba(34,211,238,.30), rgba(34,211,238,.10))}
+
+  .premium{border-color: rgba(255,46,166,.28)}
+  .premium .badge{border-color: rgba(255,46,166,.55); background: rgba(255,46,166,.09)}
+  .premium .badge .spark{background: rgba(255,46,166,.95); box-shadow:0 0 16px rgba(255,46,166,.55)}
+  .premium .cardCTA a{border:1px solid rgba(255,46,166,.65); background: linear-gradient(180deg, rgba(255,46,166,.34), rgba(255,46,166,.12))}
+  .premium .cardCTA a:hover{border-color: rgba(255,46,166,.95); background: linear-gradient(180deg, rgba(255,46,166,.48), rgba(255,46,166,.16))}
+
+  .ultra{ border-color: rgba(245,158,11,.30); }
+  .ultra::before{
+    content:"";
+    position:absolute; inset:-2px;
+    background: radial-gradient(400px 250px at 30% 10%, rgba(245,158,11,.22), transparent 60%),
+                radial-gradient(400px 250px at 70% 0%, rgba(255,46,166,.20), transparent 65%),
+                radial-gradient(520px 320px at 60% 90%, rgba(139,92,246,.16), transparent 70%);
+    filter: blur(16px);
+    z-index:0;
+  }
+  .ultra > *{position:relative; z-index:1;}
+  .ultra .badge{border-color: rgba(245,158,11,.55); background: rgba(245,158,11,.10)}
+  .ultra .badge .spark{background: rgba(245,158,11,.95); box-shadow:0 0 16px rgba(245,158,11,.55)}
+  .ultra .cardCTA a{
+    border:1px solid rgba(245,158,11,.70);
+    background: linear-gradient(180deg, rgba(245,158,11,.34), rgba(245,158,11,.10));
+    box-shadow: 0 20px 70px rgba(245,158,11,.14), 0 20px 70px rgba(0,0,0,.45);
+  }
+  .ultra .cardCTA a:hover{
+    border-color: rgba(245,158,11,.95);
+    background: linear-gradient(180deg, rgba(245,158,11,.46), rgba(245,158,11,.14));
+  }
+
+  .roadmap{
+    max-width: 920px;
+    margin: 0 auto;
+    display:flex; flex-direction:column; gap: 14px;
+  }
+  .roadItem{
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(255,255,255,.05);
+    padding: 14px 16px;
+    display:flex; align-items:center; justify-content:space-between;
+    gap: 10px;
+  }
+  .roadItem strong{letter-spacing:.2px}
+  .roadItem span{opacity:.72}
+
+  .faq{
+    max-width: 920px;
+    margin: 0 auto;
+    border-radius: 22px;
+    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(255,255,255,.04);
+    overflow:hidden;
+  }
+  details{
+    border-top: 1px solid rgba(255,255,255,.08);
+    padding: 14px 16px;
+  }
+  details:first-child{border-top:none}
+  summary{
+    cursor:pointer;
+    font-weight: 900;
+    letter-spacing:.2px;
+    list-style:none;
+  }
+  summary::-webkit-details-marker{display:none}
+  .answer{
+    color: rgba(244,244,255,.78);
+    margin-top: 10px;
+    line-height:1.6;
+  }
+  .mono{
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 12.5px;
+    background: rgba(0,0,0,.35);
+    border: 1px solid rgba(255,255,255,.10);
+    padding: 10px 12px;
+    border-radius: 12px;
+    overflow:auto;
+    color: rgba(244,244,255,.82);
+  }
+
+  footer{
+    margin-top: 46px;
+    text-align:center;
+    color: rgba(244,244,255,.55);
+    font-size: 12px;
+  }
+
+  .demoMedia{
+    position: absolute;
+    pointer-events:none;
+    opacity: 1;
+    transition: opacity 900ms linear;
+    z-index: 5;
+    border-radius: 14px;
+    box-shadow: 0 20px 70px rgba(0,0,0,.55);
+    border: 1px solid rgba(255,255,255,.12);
+  }
+  .textPop{
+    font-size: 35px;
+    position:absolute;
+    left:50%; top:50%;
+    transform: translate(-50%,-50%);
+    font-weight: 950;
+    letter-spacing: .6px;
+    text-transform: uppercase;
+    opacity: 0;
+    z-index: 8;
+    text-shadow: 0 18px 44px rgba(0,0,0,.55);
+    -webkit-text-stroke: 2px rgba(0,0,0,.35);
+    animation: popIn 240ms ease-out forwards, popOut 520ms ease-in forwards;
+    animation-delay: 0ms, var(--hold, 1200ms);
+    user-select:none;
+    pointer-events:none;
+    padding: 8px 10px;
+    border-radius: 14px;
+    background: rgba(0,0,0,.18);
+    border: 1px solid rgba(255,255,255,.12);
+    backdrop-filter: blur(10px);
+  }
+  @keyframes popIn{
+    from{opacity:0; transform: translate(-50%,-50%) scale(.92); filter: blur(12px);}
+    to  {opacity:1; transform: translate(-50%,-50%) scale(1); filter: blur(0);}
+  }
+  @keyframes popOut{
+    to{opacity:0; transform: translate(-50%,-50%) scale(1.03); filter: blur(14px);}
+  }
+
+  /* All my links section */
+  .linksGrid{
+    display:grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+  }
+  @media (max-width: 980px){
+    .linksGrid{ grid-template-columns: 1fr; }
+  }
+  .linkCard{
+    border-radius: 22px;
+    border:1px solid rgba(255,255,255,.12);
+    background: linear-gradient(180deg, rgba(12,12,18,.62), rgba(10,10,14,.46));
+    box-shadow: var(--shadow2);
+    overflow:hidden;
+    transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+  }
+  .linkCard:hover{
+    transform: translateY(-3px);
+    border-color: rgba(255,255,255,.20);
+    box-shadow: 0 26px 90px rgba(0,0,0,.58);
+  }
+  .linkHead{
+    padding: 14px 16px 12px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    display:flex; align-items:center; justify-content:space-between; gap: 12px;
+  }
+  .linkTitle{
+    display:flex; align-items:center; gap:10px;
+    font-weight: 950;
+    letter-spacing: .2px;
+  }
+  .linkIcon{
+    width: 36px; height: 36px; border-radius: 14px;
+    display:grid; place-items:center;
+    border: 1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.06);
+  }
+  .linkMeta{font-size: 12px; opacity:.72; font-weight:800; letter-spacing:.2px}
+  .linkBody{ padding: 14px 16px 16px; color: rgba(244,244,255,.80); line-height: 1.55; }
+  .linkActions{ padding: 0 16px 16px; display:flex; gap:10px; }
+  .linkActions a.btn, .linkActions button.btn{ width: 100%; margin-top: 0 !important; }
+  .linkActions .btn{ padding: 12px 14px; border-radius: 14px; font-weight: 950; }
+
+  .linkCard.pink{ border-color: rgba(255,46,166,.28); }
+  .linkCard.pink .linkIcon{ background: rgba(255,46,166,.12); border-color: rgba(255,46,166,.28); }
+  .linkCard.vio{ border-color: rgba(139,92,246,.28); }
+  .linkCard.vio .linkIcon{ background: rgba(139,92,246,.12); border-color: rgba(139,92,246,.28); }
+  .linkCard.cyan{ border-color: rgba(34,211,238,.24); }
+  .linkCard.cyan .linkIcon{ background: rgba(34,211,238,.10); border-color: rgba(34,211,238,.24); }
+  .linkCard.amber{ border-color: rgba(245,158,11,.28); }
+  .linkCard.amber .linkIcon{ background: rgba(245,158,11,.12); border-color: rgba(245,158,11,.28); }
+
+  .addr{
+    display:flex; align-items:stretch; gap:10px; flex-wrap:wrap;
+  }
+
+  /* ✅ embed-style address display (no ugly scrollbar / no huge line) */
+  .addr .mono{
+    flex: 1 1 260px;
+    margin:0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+
+  .addr button.btn{ flex: 0 0 auto; margin-top:0 !important; }
+  button.btn.copied{
+    background: rgba(34,211,238,.12);
+    border-color: rgba(34,211,238,.30);
+  }
+
+  /* ===== DEMO COUNTDOWN TIMER (added) ===== */
+  .demoTimer{
+    position:absolute;
+    top:14px;
+    right:14px;
+    z-index:20;
+
+    font-weight:1000;
+    font-size:22px;
+    letter-spacing:2px;
+
+    padding:8px 14px;
+    border-radius:14px;
+
+    background:rgba(0,0,0,.45);
+    border:1px solid rgba(255,255,255,.15);
+    backdrop-filter: blur(10px);
+
+    box-shadow:0 10px 30px rgba(0,0,0,.5);
+    user-select:none;
+    pointer-events:none;
+  }
+
+  .demoTimer.boom{ animation: boom .55s ease; }
+  @keyframes boom{
+    0%{transform:scale(1)}
+    40%{transform:scale(1.6)}
+    70%{transform:scale(.9)}
+    100%{transform:scale(1)}
+  }
+
+  .demoTimer.urgent{ animation:pulse 1s infinite; }
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(255,46,166,.7)}
+    100%{box-shadow:0 0 0 22px rgba(255,46,166,0)}
   }
 </style>
 </head>
 <body>
-<div class="ambient"></div>
-<div class="noise"></div>
+<div class="glow"></div>
 
-<div class="nav">
-  <div class="container navInner">
+<div class="wrap">
+  <div class="topbar">
     <div class="brand">
-      <div class="logoDot"></div>
-      <div>ILLYASAKA</div>
-    </div>
-
-    <div class="navLinks">
-      <a href="#demo">Demo</a>
-      <a href="#editions">Editions</a>
-      <a href="#features">Features</a>
-      <a href="#roadmap">Roadmap</a>
-      <a href="#download">Download</a>
-    </div>
-
-    <div class="navCTA">
-      <button class="btn" onclick="scrollToId('editions')">Compare</button>
-      <button class="btn btnPrimary" onclick="scrollToId('download')">Get it</button>
-    </div>
-  </div>
-</div>
-
-<section class="hero container" id="demo">
-  <div class="heroGrid">
-    <div>
-      <h1 class="headline">
-        Autodrain. <span class="gradientText">Immersion.</span><br/>
-        Illyasaka takes control.
-      </h1>
-      <div class="sub">
-        A private browser extension experience: fullscreen mode, hypnotic text bursts, high-intensity visuals, layered SFX, and timed popups — designed for an immersive “no escape” flow.
-        <br/><br/>
-        <b>Demo below uses external media links.</b> Replace the URLs with your own hosted packs.
-      </div>
-
-      <div class="heroBadges">
-        <span class="badge badgeGlow">Fullscreen</span>
-        <span class="badge">Visual Storm</span>
-        <span class="badge">Random SFX</span>
-        <span class="badge">Text Popups</span>
-        <span class="badge">Timed Popups</span>
+      <div class="logo"></div>
+      <div>
+        Illyasaka
+        <small>Private Extension</small>
       </div>
     </div>
-
-    <div class="heroCard">
-      <div class="heroCardInner">
-        <div style="font-weight:950; letter-spacing:.2px; font-size:14px;">What it is</div>
-        <div style="margin-top:8px; color:var(--muted); line-height:1.65; font-size:13px;">
-          Not a “virus”, not spyware, no hidden risk. It’s a <b>consensual themed experience</b> built around goon/hypno + autodrain mechanics.
-          It runs locally in your browser — the content is the product.
-        </div>
-
-        <div class="miniGrid">
-          <div class="mini">
-            <b>Safe by design</b>
-            <span>No background mining. No data stealing. No system access.</span>
-          </div>
-          <div class="mini">
-            <b>Private build</b>
-            <span>Not a public store extension. Distributed privately.</span>
-          </div>
-          <div class="mini">
-            <b>Immersive UX</b>
-            <span>High-polish visuals & pacing. Netflix-like feel.</span>
-          </div>
-        </div>
-      </div>
+    <div class="ctaRow">
+      <button class="btn" id="btnAllLinks" type="button">All my links</button>
+      <a class="btn" href="https://x.com/Illyasaka" target="_blank" rel="noreferrer">x.com</a>
+      <a class="btn primary" href="https://gofile.io/d/yonFLt" target="_blank" rel="noreferrer">Download</a>
     </div>
   </div>
 
-  <!-- DEMO STAGE -->
-  <div style="margin-top:22px;">
-    <div class="demoStage" id="demoStage">
-      <div class="demoTopBar">
+  <section class="hero">
+    <div class="kicker"><span class="dot"></span> Autodrain. Immersion.</div>
+    <h1>Illyasaka takes control.</h1>
+    <p class="sub">
+      A private browser extension experience: fullscreen mode, hypnotic text bursts, high-intensity visuals,
+      layered SFX, and timed popups - designed for an immersive "no escape" flow.
+    </p>
+  </section>
+
+  <section class="demoWrap" id="demo">
+    <div class="demoCard">
+      <div class="demoHead">
         <div class="demoTitle">
-          <b>DEMO — Illyasaka Storm</b>
-          <span>Click START (audio requires user gesture). STOP resets.</span>
+          <span class="pill"><b>DEMO</b> · Web preview</span>
+          <span class="pill" id="demoStatus"><b>Status:</b> Idle</span>
         </div>
         <div class="demoControls">
-          <button class="pill pillPrimary" id="btnStart" onclick="demoStart()">▶ START</button>
-          <button class="pill" onclick="demoStop()">■ STOP</button>
-          <button class="pill" onclick="demoBurst()">⚡ BURST</button>
-          <span class="pill" id="demoStatus" style="cursor:default; opacity:.92">Ready</span>
+          <button class="btn big start" id="btnStart" type="button">▶ START</button>
+          <button class="btn big stop" id="btnStop" type="button" disabled>■ STOP</button>
         </div>
       </div>
+      <div class="demoStage" id="stage">
+        <div class="stageOverlay"></div>
 
-      <div class="demoCanvas" id="demoCanvas"></div>
-      <div class="demoHint">Tip: replace the demo URLs in the code with your hosted packs.</div>
+        <!-- ✅ Added countdown timer (top-right inside demo) -->
+        <div id="demoTimer" class="demoTimer">05:00</div>
+
+        <div class="stageWatermark">ILLYASAKA • DEMO</div>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <!-- EDITIONS directly after demo -->
-  <h2 class="sectionTitle" id="editions" style="margin-top:58px;">Choose your Edition</h2>
-  <div class="sectionSub">
-    Three editions. Three intensities. Ultra Premium is engineered to feel “unfair” — higher variety, higher control, deeper immersion.
-  </div>
+  <section class="section" id="editions">
+    <h2>Choose your edition</h2>
 
-  <div class="pricingGrid">
-    <!-- FREE -->
-    <div class="plan free">
-      <div class="planHeader">
-        <div class="planName">
-          <span>Normal</span>
-          <span class="chip">FREE</span>
+    <div class="cards">
+      <article class="card free">
+        <div class="cardTop">
+          <div class="badge"><span class="spark"></span> Normal</div>
+          <div class="price">$0 <small>Free</small></div>
         </div>
-        <div class="planPrice">$0 <small>default build</small></div>
-      </div>
-      <div class="planBody">
-        <ul class="list">
-          <li><span class="tick">✓</span> 500 hentai/porn images</li>
-          <li><span class="tick">✓</span> 40 videos</li>
-          <li><span class="tick">✓</span> 10 audio</li>
-          <li><span class="tick">✓</span> 50 texts</li>
-          <li><span class="tick">✓</span> No custom settings</li>
-        </ul>
-      </div>
-      <div class="planCTA">
-        <button class="buy" onclick="cta('Normal')">Try / Download</button>
-      </div>
-    </div>
-
-    <!-- PREMIUM -->
-    <div class="plan premium">
-      <div class="planHeader">
-        <div class="planName">
-          <span>Premium</span>
-          <span class="chip">POPULAR</span>
+        <div class="cardBody">
+          <ul>
+            <li>Core immersive experience</li>
+            <li><b>500</b> hentai / porn images + <b>40</b> video</li>
+            <li><b>10</b> audio</li>
+            <li><b>50</b> text</li>
+            <li>No Custom Setting</li>
+          </ul>
         </div>
-        <div class="planPrice">$25 <small>upgrade</small></div>
-      </div>
-      <div class="planBody">
-        <ul class="list">
-          <li><span class="tick">✓</span> 5,000 images</li>
-          <li><span class="tick">✓</span> 100 videos</li>
-          <li><span class="tick">✓</span> 60 audio</li>
-          <li><span class="tick">✓</span> 300 texts</li>
-          <li><span class="tick">✓</span> Custom settings (partial)</li>
-        </ul>
-      </div>
-      <div class="planCTA">
-        <button class="buy" onclick="cta('Premium')">Upgrade / Buy</button>
-      </div>
-    </div>
-
-    <!-- ULTRA -->
-    <div class="plan ultra">
-      <div class="planHeader">
-        <div class="planName">
-          <span>Ultra Premium</span>
-          <span class="chip">BEST VALUE</span>
+        <div class="cardCTA">
+          <a class="btn" href="https://gofile.io/d/yonFLt" target="_blank" rel="noreferrer">Download Free</a>
         </div>
-        <div class="planPrice">$1000+ <small>exclusive</small></div>
-      </div>
-      <div class="planBody">
-        <ul class="list">
-          <li><span class="tick">✓</span> 20,000 images</li>
-          <li><span class="tick">✓</span> 250 videos</li>
-          <li><span class="tick">✓</span> 60 hentai audio + spoken texts</li>
-          <li><span class="tick">✓</span> 1,000 texts</li>
-          <li><span class="tick">✓</span> Custom settings (ALL)</li>
-          <li><span class="tick">✓</span> Add your own media (images/videos/audio)</li>
-        </ul>
-      </div>
-      <div class="planCTA">
-        <button class="buy" onclick="cta('Ultra Premium')">Get Ultra</button>
-      </div>
+      </article>
+
+      <article class="card premium">
+        <div class="cardTop">
+          <div class="badge"><span class="spark"></span> Premium</div>
+          <div class="price">$25 <small>Upgrade</small></div>
+        </div>
+        <div class="cardBody">
+          <ul>
+            <li>Extended immersion + partial control</li>
+            <li><b>5,000</b> images + <b>100</b> video</li>
+            <li><b>60</b> audio</li>
+            <li><b>300</b> text</li>
+            <li>Custom Setting (partial)</li>
+          </ul>
+        </div>
+        <div class="cardCTA">
+          <a class="btn" href="https://throne.com/illyasaka" target="_blank" rel="noreferrer">Upgrade</a>
+        </div>
+      </article>
+
+      <article class="card ultra">
+        <div class="cardTop">
+          <div class="badge"><span class="spark"></span> Ultra Premium</div>
+          <div class="price">$1000+ <small>Ultimate</small></div>
+        </div>
+        <div class="cardBody">
+          <ul>
+            <li>Full unlimited experience</li>
+            <li><b>20,000</b> images + <b>250</b> video</li>
+            <li><b>60</b> hentai audio + all text in audio</li>
+            <li><b>1,000</b> text</li>
+            <li>Custom Setting (all)</li>
+            <li>Add your own media (images/videos/audio)</li>
+          </ul>
+        </div>
+        <div class="cardCTA">
+          <a class="btn" href="https://throne.com/illyasaka" target="_blank" rel="noreferrer">Get Ultra</a>
+        </div>
+      </article>
     </div>
-  </div>
-</section>
 
-<section class="container" id="features">
-  <h2 class="sectionTitle">What you get</h2>
-  <div class="sectionSub">
-    This is a themed immersive extension experience. The core value is pacing, polish, and intensity — with clean UX and zero malware behavior.
-  </div>
-
-  <div class="split">
-    <div class="panel">
-      <h3>Experience stack</h3>
-      <p>
-        Fullscreen takeover + background music + random SFX layers + image/video storm + hypnotic text bursts + timed popups.
-        Everything is about rhythm and escalation.
-      </p>
-      <div class="miniGrid">
-        <div class="mini"><b>Fullscreen</b><span>Locks attention on the experience.</span></div>
-        <div class="mini"><b>Storm visuals</b><span>Images/videos spawn and fade intelligently.</span></div>
-        <div class="mini"><b>Hypno text</b><span>Rapid phrases, styles, and motion.</span></div>
-      </div>
+    <div style="margin-top:18px; display:flex; justify-content:center;">
+      <a class="btn primary" href="https://x.com/Illyasaka" target="_blank" rel="noreferrer">
+        💎 Get Custom Pack (DM me on X)
+      </a>
     </div>
+  </section>
 
-    <div class="panel">
-      <h3>Safety & transparency</h3>
-      <p>
-        Not a virus, no data exfiltration, no system-level access. It runs in the browser context as a local experience.
-        Your content packs are the product.
-      </p>
-      <div class="miniGrid">
-        <div class="mini"><b>No spyware</b><span>No keystroke logging, no hidden uploads.</span></div>
-        <div class="mini"><b>No miner</b><span>No CPU mining / background abuse.</span></div>
-        <div class="mini"><b>Private build</b><span>Shared privately, not a public store item.</span></div>
-      </div>
+  <section class="section" id="roadmap">
+    <h2>Upcoming features</h2>
+    <div class="roadmap">
+      <div class="roadItem"><strong>Mobile version</strong><span>Android / iOS web app</span></div>
+      <div class="roadItem"><strong>More images pack</strong><span>new themed drops</span></div>
+      <div class="roadItem"><strong>More video pack</strong><span>higher variety</span></div>
+      <div class="roadItem"><strong>More sound pack</strong><span>layers + playlists</span></div>
+      <div class="roadItem"><strong>More customisation setting</strong><span>profiles + presets</span></div>
+      <div class="roadItem"><strong>Hypnosis effect</strong><span>visual overlays</span></div>
+      <div class="roadItem"><strong>Glitch / distortion / immersion effects</strong><span>extra intensity</span></div>
+      <div class="roadItem"><strong>Smart audio playlists</strong><span>on-demand pacing</span></div>
+      <div class="roadItem"><strong>Intensity modes</strong><span>soft to extreme</span></div>
+      <div class="roadItem"><strong>Scheduled sessions / auto timers</strong><span>set & forget</span></div>
+      <div class="roadItem"><strong>Saved profiles</strong><span>one-click loadouts</span></div>
+      <div class="roadItem"><strong>Exclusive UI themes</strong><span>personal aesthetic</span></div>
+      <div class="roadItem"><strong>Special events / seasonal drops</strong><span>limited packs</span></div>
     </div>
-  </div>
+  </section>
 
-  <h2 class="sectionTitle" style="margin-top:56px;">Custom Packs</h2>
-  <div class="sectionSub">Made for you — not mass produced.</div>
-
-  <div class="panel">
-    <div class="split">
-      <div>
-        <h3>💎 On-demand packs</h3>
-        <p>
-          Choose your poison: character focused, anime focused, or your personal selection.
-          Private themed collections, exclusive builds not shared with anyone else.
-        </p>
-      </div>
-      <div>
-        <ul class="list">
-          <li><span class="tick">✓</span> 500 images — your personal selection</li>
-          <li><span class="tick">✓</span> 1000 images — single character / anime focus</li>
-          <li><span class="tick">✓</span> Private themed collections</li>
-          <li><span class="tick">✓</span> Exclusive builds</li>
-        </ul>
-      </div>
+  <section class="section" id="install">
+    <h2>Install (Chrome / Chromium)</h2>
+    <div class="faq">
+      <details open>
+        <summary>How do I install the extension?</summary>
+        <div class="answer">
+          <ol style="margin:8px 0 0; padding-left:18px; color: rgba(244,244,255,.80); line-height:1.7;">
+            <li>Download the build from the Download button.</li>
+            <li>Unzip the folder on your PC.</li>
+            <li>Open <span class="mono">chrome://extensions</span></li>
+            <li>Enable <b>Developer mode</b> (top right).</li>
+            <li>Click <b>Load unpacked</b> and select the unzipped folder.</li>
+            <li>Pin the extension (optional) and click it to launch.</li>
+          </ol>
+        </div>
+      </details>
+      <details>
+        <summary>How do I update it?</summary>
+        <div class="answer">
+          Replace the files in the same unpacked folder, then press <b>Reload</b> on the extension card in
+          <span class="mono">chrome://extensions</span>.
+        </div>
+      </details>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="container" id="roadmap">
-  <h2 class="sectionTitle">Roadmap</h2>
-  <div class="sectionSub">This is only the beginning.</div>
+  <section class="section" id="links">
+    <h2>All my links</h2>
 
-  <div class="split">
-    <div class="panel">
-      <h3>Planned updates</h3>
-      <ul class="list">
-        <li><span class="tick">✓</span> Mobile version (Android / iOS web app)</li>
-        <li><span class="tick">✓</span> More image packs</li>
-        <li><span class="tick">✓</span> More video packs</li>
-        <li><span class="tick">✓</span> More sound packs</li>
-        <li><span class="tick">✓</span> More customization settings</li>
-        <li><span class="tick">✓</span> Hypnosis visual effects</li>
-      </ul>
+    <div class="linksGrid">
+      <article class="linkCard vio">
+        <div class="linkHead">
+          <div class="linkTitle">
+            <div class="linkIcon">📜</div>
+            Contract (Docs)
+          </div>
+          <div class="linkMeta">Ownership contract</div>
+        </div>
+        <div class="linkBody">
+          Read the contract / ruleset.
+        </div>
+        <div class="linkActions">
+          <a class="btn" href="https://illyasaka.github.io/docs" target="_blank" rel="noreferrer">Open</a>
+        </div>
+      </article>
+
+      <article class="linkCard cyan">
+        <div class="linkHead">
+          <div class="linkTitle">
+            <div class="linkIcon">🌀</div>
+            Hypnosis
+          </div>
+          <div class="linkMeta">Immersion tool</div>
+        </div>
+        <div class="linkBody">
+          Enter the hypnosis experience.
+        </div>
+        <div class="linkActions">
+          <a class="btn" href="https://illyasaka.github.io/hypnosis" target="_blank" rel="noreferrer">Start</a>
+        </div>
+      </article>
+
+      <article class="linkCard pink">
+        <div class="linkHead">
+          <div class="linkTitle">
+            <div class="linkIcon">🎁</div>
+            Offering (Throne)
+          </div>
+          <div class="linkMeta">Send an offering</div>
+        </div>
+        <div class="linkBody">
+          Support Illyasaka via Throne.
+        </div>
+        <div class="linkActions">
+          <a class="btn primary" href="https://throne.com/Illyasaka" target="_blank" rel="noreferrer">Offer</a>
+        </div>
+      </article>
+
+      <article class="linkCard amber">
+        <div class="linkHead">
+          <div class="linkTitle">
+            <div class="linkIcon">🎰</div>
+            Casino
+          </div>
+          <div class="linkMeta">Play</div>
+        </div>
+        <div class="linkBody">
+          Try your luck in Illyasaka’s casino.
+        </div>
+        <div class="linkActions">
+          <a class="btn" href="https://illyasaka.github.io/casino" target="_blank" rel="noreferrer">Play</a>
+        </div>
+      </article>
+
+      <article class="linkCard cyan">
+        <div class="linkHead">
+          <div class="linkTitle">
+            <div class="linkIcon">💬</div>
+            Discord
+          </div>
+          <div class="linkMeta">Join the server</div>
+        </div>
+        <div class="linkBody">
+          Enter the community + VIP access.
+        </div>
+        <div class="linkActions">
+          <a class="btn" href="https://discord.com/invite/eMTpfytFVC" target="_blank" rel="noreferrer">Join</a>
+        </div>
+      </article>
+
+      <article class="linkCard vio">
+        <div class="linkHead">
+          <div class="linkTitle">
+            <div class="linkIcon">🧬</div>
+            Techdom Rebrand
+          </div>
+          <div class="linkMeta">Rebrand your X</div>
+        </div>
+        <div class="linkBody">
+          Quick rebrand link for your X account.
+        </div>
+        <div class="linkActions">
+          <a class="btn" href="https://rebrand.ly/illyasaka" target="_blank" rel="noreferrer">Open</a>
+        </div>
+      </article>
+
+      <article class="linkCard amber">
+        <div class="linkHead">
+          <div class="linkTitle">
+            <div class="linkIcon">₿</div>
+            Crypto (BTC)
+          </div>
+          <div class="linkMeta">Send BTC</div>
+        </div>
+        <div class="linkBody">
+          <div class="addr">
+            <div class="mono">bc1qqwwtwh82ayhjfkj9fpsrcnmr9k6kyk80n0fuhu</div>
+            <button class="btn" type="button" data-copy="bc1qqwwtwh82ayhjfkj9fpsrcnmr9k6kyk80n0fuhu">Copy</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="linkCard vio">
+        <div class="linkHead">
+          <div class="linkTitle">
+            <div class="linkIcon">◇</div>
+            Crypto (ETH)
+          </div>
+          <div class="linkMeta">Send ETH</div>
+        </div>
+        <div class="linkBody">
+          <div class="addr">
+            <div class="mono">0x800625B03396CCED7343FC382915fd892f9f4aE3</div>
+            <button class="btn" type="button" data-copy="0x800625B03396CCED7343FC382915fd892f9f4aE3">Copy</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="linkCard pink">
+        <div class="linkHead">
+          <div class="linkTitle">
+            <div class="linkIcon">⬇️</div>
+            Autodrain Download
+          </div>
+          <div class="linkMeta">Mirror</div>
+        </div>
+        <div class="linkBody">
+          Download the autodrain build (mirror).
+        </div>
+        <div class="linkActions">
+          <a class="btn primary" href="https://gofile.io/d/yonFLt" target="_blank" rel="noreferrer">Download</a>
+        </div>
+      </article>
     </div>
-    <div class="panel">
-      <h3>Extra ideas (optional)</h3>
-      <ul class="list">
-        <li><span class="tick">✓</span> Glitch / distortion / immersion effects</li>
-        <li><span class="tick">✓</span> Smart audio playlists (mood based)</li>
-        <li><span class="tick">✓</span> Intensity modes (soft → extreme)</li>
-        <li><span class="tick">✓</span> Scheduled sessions / auto timers</li>
-        <li><span class="tick">✓</span> Saved profiles / presets</li>
-        <li><span class="tick">✓</span> Exclusive UI themes & seasonal drops</li>
-      </ul>
-    </div>
-  </div>
+  </section>
 
-  <h2 class="sectionTitle" style="margin-top:56px;">FAQ</h2>
-  <div class="sectionSub">Quick answers.</div>
+  <footer>
+    © Illyasaka - private distribution • <a href="#editions" style="color:rgba(244,244,255,.75)">Editions</a> • <a href="#install" style="color:rgba(244,244,255,.75)">Install</a>
+  </footer>
+</div>
 
-  <details>
-    <summary>Is this a virus / goonware?</summary>
-    <p>
-      No. It’s a themed browser experience. No system access, no hidden installs, no data stealing.
-      The product is the immersion: visuals, audio, timing, UI.
-    </p>
-  </details>
-  <details>
-    <summary>Why private distribution?</summary>
-    <p>
-      Content, theme, and pack sizes make it unsuitable for public marketplaces. It’s built for private delivery.
-    </p>
-  </details>
-  <details>
-    <summary>Can I add my own media?</summary>
-    <p>
-      Only Ultra Premium offers personal media integration (images/videos/audio), plus full custom settings.
-    </p>
-  </details>
-</section>
-
-<section class="container" id="download" style="padding-top:30px;">
-  <div class="panel" style="text-align:center; padding:26px;">
-    <h2 class="sectionTitle" style="margin:0 0 10px;">Get the build</h2>
-    <p class="sectionSub" style="margin:0 auto 18px;">
-      Private delivery. Click below to download the package or contact for upgrades.
-    </p>
-    <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
-      <button class="btn btnPrimary" onclick="cta('Download')">Download</button>
-      <button class="btn" onclick="cta('Upgrade')">Upgrade</button>
-      <button class="btn" onclick="cta('Custom Pack')">Custom Pack</button>
-    </div>
-  </div>
-
-  <div class="footer">
-    <b>Illyasaka</b> © 2026 — Private immersive extension experience
-  </div>
-</section>
-
-<script>
-/* ============================
-   DEMO CONFIG (replace these)
-============================ */
-
-/**
- * Put your own hosted media here:
- * - GitHub + jsDelivr works great for demo
- * - Cloudflare R2 public bucket is also great
- */
-const DEMO_IMAGES = [
-  // Replace with your own URLs:
-  "https://images.unsplash.com/photo-1520975693411-b4f26aa8e84a?auto=format&fit=crop&w=900&q=60",
-  "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=60",
-  "https://images.unsplash.com/photo-1520975684505-5f0f2b62d249?auto=format&fit=crop&w=900&q=60",
-  "https://images.unsplash.com/photo-1520975682138-80f3a5a1a79b?auto=format&fit=crop&w=900&q=60"
-];
-
-const DEMO_MUSIC = [
-  // Replace with your hosted mp3/ogg:
-  // Example placeholder (you must replace — many hosts block CORS):
-  "https://cdn.pixabay.com/download/audio/2022/03/15/audio_2b66f8f4c2.mp3?filename=cyberpunk-moonlight-sonata-110624.mp3"
-];
-
-const DEMO_SFX = [
-  // Replace with your hosted short SFX:
-  "https://cdn.pixabay.com/download/audio/2022/03/10/audio_7b497be9c2.mp3?filename=click-124467.mp3",
-  "https://cdn.pixabay.com/download/audio/2021/08/04/audio_8b3f3c1c8d.mp3?filename=glitch-5-95300.mp3"
-];
-
-const DEMO_TEXTS = [
-  "OBEY.",
-  "FOCUS.",
-  "MINE.",
-  "PAY.",
-  "LOOK HERE.",
-  "BREATHE.",
-  "AGAIN.",
-  "NO ESCAPE.",
-  "DEEPER.",
-  "LISTEN."
-];
-
-/* ============================
-   DEMO ENGINE
-============================ */
-
-const stage = document.getElementById("demoStage");
-const canvas = document.getElementById("demoCanvas");
-const statusEl = document.getElementById("demoStatus");
-
-let running = false;
-let spawnTimer = null;
-let textTimer = null;
-let sfxTimer = null;
-let music = null;
-
-function scrollToId(id){
-  document.getElementById(id)?.scrollIntoView({behavior:"smooth", block:"start"});
-}
-function cta(which){
-  alert("CTA clicked: " + which + "\\n\\nHook this to your real checkout / DM / download URL.");
-}
-
-function rnd(min, max){ return Math.random()*(max-min)+min; }
-function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
-
-async function demoStart(){
-  if(running) return;
-  running = true;
-  statusEl.textContent = "Running";
-
-  // music requires user gesture -> OK because we clicked START
-  try{
-    if(music) { music.pause(); music = null; }
-    music = new Audio(pick(DEMO_MUSIC));
-    music.loop = true;
-    music.volume = 0.55;
-    await music.play();
-  }catch(e){
-    // Many hosts/CORS can block. Replace URLs with a host that allows direct audio.
-    console.warn("Music failed. Replace DEMO_MUSIC URL with your host.", e);
-    statusEl.textContent = "Running (music blocked)";
-  }
-
-  spawnTimer = setInterval(spawnMedia, 240);
-  textTimer  = setInterval(spawnText, 520);
-  sfxTimer   = setInterval(playSfx, 2200);
-
-  // initial burst
-  for(let i=0;i<6;i++) setTimeout(spawnMedia, i*120);
-  for(let i=0;i<3;i++) setTimeout(spawnText, i*220);
-}
-
-function demoStop(){
-  running = false;
-  statusEl.textContent = "Stopped";
-  clearInterval(spawnTimer); spawnTimer=null;
-  clearInterval(textTimer);  textTimer=null;
-  clearInterval(sfxTimer);   sfxTimer=null;
-
-  try{ if(music){ music.pause(); music.currentTime = 0; } }catch{}
-  music = null;
-
-  // clear stage elements
-  [...canvas.querySelectorAll(".media, .tpop")].forEach(el => el.remove());
-}
-
-function demoBurst(){
-  if(!running){
-    statusEl.textContent = "Press START first";
-    setTimeout(()=> statusEl.textContent="Ready", 900);
-    return;
-  }
-  statusEl.textContent = "Burst!";
-  for(let i=0;i<18;i++) setTimeout(spawnMedia, i*45);
-  for(let i=0;i<8;i++) setTimeout(spawnText, i*90);
-  setTimeout(()=> statusEl.textContent="Running", 700);
-}
-
-function spawnMedia(){
-  if(!running) return;
-
-  const url = pick(DEMO_IMAGES);
-  const img = document.createElement("img");
-  img.className = "media";
-  img.src = url;
-
-  // sizing
-  const W = stage.clientWidth;
-  const H = stage.clientHeight;
-
-  const h = rnd(H*0.18, H*0.48);
-  const w = h * rnd(0.75, 1.25);
-
-  const x = rnd(10, Math.max(10, W - w - 10));
-  const y = rnd(60, Math.max(60, H - h - 10)); // keep below topbar
-
-  img.style.left = x + "px";
-  img.style.top  = y + "px";
-  img.style.width = w + "px";
-  img.style.height = h + "px";
-  img.style.objectFit = "cover";
-
-  // tiny tilt
-  img.style.transform = `translateZ(0) rotate(${rnd(-2.2,2.2)}deg) scale(.88)`;
-  canvas.appendChild(img);
-
-  // fade out / remove
-  const life = rnd(2400, 5200);
-  setTimeout(()=> img.classList.add("fadeOut"), Math.max(200, life-900));
-  setTimeout(()=> img.remove(), life);
-}
-
-function spawnText(){
-  if(!running) return;
-
-  const W = stage.clientWidth;
-  const H = stage.clientHeight;
-  const t = document.createElement("div");
-  t.className = "tpop stroke";
-
-  const txt = pick(DEMO_TEXTS);
-  t.textContent = txt;
-
-  const x = rnd(80, Math.max(80, W-80));
-  const y = rnd(120, Math.max(120, H-60));
-
-  t.style.left = x + "px";
-  t.style.top  = y + "px";
-
-  const size = rnd(26, 84);
-  t.style.fontSize = size + "px";
-
-  // gradient-ish vibe
-  const hue = Math.floor(rnd(280, 360));
-  t.style.color = `hsl(${hue} 95% 70%)`;
-  t.style.textShadow = `0 0 28px rgba(255,42,166,.35), 0 18px 45px rgba(0,0,0,.55)`;
-
-  canvas.appendChild(t);
-
-  const life = rnd(800, 1800);
-  setTimeout(()=> t.classList.add("out"), Math.max(250, life-520));
-  setTimeout(()=> t.remove(), life);
-}
-
-function playSfx(){
-  if(!running) return;
-  try{
-    const a = new Audio(pick(DEMO_SFX));
-    a.volume = 0.55;
-    a.play().catch(()=>{});
-  }catch{}
-}
-</script>
+<!-- ✅ JS file name updated -->
+<script src="index.js"></script>
 </body>
 </html>
