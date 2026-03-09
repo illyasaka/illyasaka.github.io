@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Illyasaka — Application Form</title>
+  <style>
+    :root {
+      --bg: #0b0a10;
+      --bg-soft: #14121d;
+      --card: rgba(22, 18, 34, 0.88);
+      --card-2: rgba(29, 22, 43, 0.92);
+      --text: #f8f1ff;
+      --muted: #b8abc7;
+      --line: rgba(255, 255, 255, 0.08);
+      --accent: #ff78c9;
+      --accent-2: #ad7bff;
+      --success: #8ef0c7;
+      --danger: #ff9db0;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      --radius-xl: 24px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(173, 123, 255, 0.18), transparent 28%),
+        radial-gradient(circle at top right, rgba(255, 120, 201, 0.16), transparent 26%),
+        linear-gradient(180deg, #08070d 0%, #0d0a14 42%, #0a0910 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.05;
+      background-image:
+        linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: radial-gradient(circle at center, black, transparent 80%);
+    }
+
+    .wrap {
+      width: min(980px, calc(100% - 32px));
+      margin: 40px auto 80px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(255,120,201,0.12), rgba(173,123,255,0.09)), var(--card);
+      border: 1px solid var(--line);
+      border-radius: 32px;
+      box-shadow: var(--shadow);
+      padding: 32px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 28px;
+      backdrop-filter: blur(18px);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -10% -40% auto;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,120,201,.28), transparent 60%);
+      filter: blur(40px);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      color: #f7d8ee;
+      font-size: 0.85rem;
+      letter-spacing: .02em;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 4vw, 3.8rem);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+    }
+
+    .lead {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      max-width: 60ch;
+    }
+
+    .hero-card {
+      position: relative;
+      z-index: 1;
+      align-self: stretch;
+      min-height: 240px;
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,.08);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)),
+        linear-gradient(160deg, rgba(255,120,201,.16), rgba(173,123,255,.16));
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+    }
+
+    .hero-card .tag {
+      display: inline-block;
+      width: fit-content;
+      font-size: .78rem;
+      color: #ffd8ef;
+      background: rgba(0,0,0,.18);
+      border: 1px solid rgba(255,255,255,.1);
+      padding: 8px 12px;
+      border-radius: 999px;
+      margin-bottom: auto;
+    }
+
+    .hero-card strong {
+      display: block;
+      font-size: 1.25rem;
+      margin-top: 20px;
+      margin-bottom: 8px;
+    }
+
+    .hero-card span {
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: .95rem;
+    }
+
+    .form-shell {
+      margin-top: 26px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 32px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      overflow: hidden;
+    }
+
+    .form-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 22px 24px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.03), transparent);
+    }
+
+    .form-top h2 {
+      margin: 0;
+      font-size: 1.05rem;
+      letter-spacing: .01em;
+    }
+
+    .subtle {
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    form {
+      padding: 24px;
+    }
+
+    .question {
+      background: var(--card-2);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: 22px;
+      margin-bottom: 18px;
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+
+    .question:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255,120,201,0.24);
+      box-shadow: 0 16px 34px rgba(0,0,0,.18);
+    }
+
+    .question-title {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    .question-title h3 {
+      margin: 0;
+      font-size: 1.02rem;
+      font-weight: 700;
+      letter-spacing: -.01em;
+    }
+
+    .required {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: .74rem;
+      background: rgba(255, 120, 201, .13);
+      border: 1px solid rgba(255, 120, 201, .24);
+      color: #ffd5ec;
+      white-space: nowrap;
+    }
+
+    .question-desc {
+      color: var(--muted);
+      font-size: .94rem;
+      line-height: 1.65;
+      margin-bottom: 14px;
+    }
+
+    .question-image {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.08);
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    textarea,
+    select {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      border-radius: 16px;
+      padding: 14px 16px;
+      outline: none;
+      font: inherit;
+      transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #9d8fad;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: rgba(255,120,201,.45);
+      box-shadow: 0 0 0 5px rgba(255,120,201,.09);
+      background: rgba(255,255,255,.06);
+    }
+
+    .choices {
+      display: grid;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .choice {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 15px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.025);
+      cursor: pointer;
+    }
+
+    .choice:hover {
+      border-color: rgba(173,123,255,.35);
+      background: rgba(255,255,255,.04);
+    }
+
+    .choice input {
+      margin-top: 3px;
+      accent-color: var(--accent);
+    }
+
+    .choice span {
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-top: 22px;
+      flex-wrap: wrap;
+    }
+
+    .submit-btn {
+      appearance: none;
+      border: 0;
+      border-radius: 18px;
+      padding: 15px 22px;
+      font: inherit;
+      font-weight: 700;
+      color: white;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 16px 35px rgba(173,123,255,.2);
+      transition: transform .18s ease, filter .18s ease;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.06);
+    }
+
+    .submit-btn:disabled {
+      opacity: .65;
+      cursor: wait;
+      transform: none;
+    }
+
+    .status {
+      font-size: .94rem;
+      color: var(--muted);
+    }
+
+    .status.success { color: var(--success); }
+    .status.error { color: var(--danger); }
+
+    .footer-note {
+      padding: 0 24px 24px;
+      color: var(--muted);
+      font-size: .86rem;
+      line-height: 1.7;
+    }
+
+    code.inline {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.08);
+      padding: 2px 8px;
+      border-radius: 10px;
+      color: #ffd7ef;
+    }
+
+    @media (max-width: 760px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 24px;
+      }
+
+      .wrap {
+        width: min(100% - 18px, 980px);
+        margin-top: 18px;
+      }
+
+      .form-top,
+      form,
+      .footer-note {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .question {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+
+  <main class="wrap">
+    <section class="hero">
+      <div>
+        <div class="eyebrow">✦ Illyasaka • Private Form</div>
+        <h1>Enter properly.</h1>
+        <p class="lead">
+          Formulaire custom en mode GitHub Pages, avec rendu élégant, questions dynamiques,
+          images, champs texte, choix multiple et envoi vers un backend externe pour conserver
+          toutes les réponses facilement.
+        </p>
+      </div>
+      <aside class="hero-card">
+        <div class="tag">Static front • dynamic questions</div>
+        <strong>Ajoute des questions dans un seul tableau JS</strong>
+        <span>
+          Tu modifies simplement l'objet <code class="inline">FORM_CONFIG</code> plus bas pour ajouter,
+          retirer ou réordonner les questions.
+        </span>
+      </aside>
+    </section>
+
+    <section class="form-shell">
+      <div class="form-top">
+        <div>
+          <h2 id="formTitle">Application Form</h2>
+          <div class="subtle" id="formSubtitle">Please answer carefully.</div>
+        </div>
+        <div class="subtle" id="questionCount">0 question</div>
+      </div>
+
+      <form id="dynamicForm"></form>
+
+      <div class="footer-note">
+        Les réponses seront envoyées vers l'URL renseignée dans
+        <code class="inline">FORM_CONFIG.submitUrl</code>.
+        Pour GitHub Pages, remplace cette URL par un backend type Google Apps Script ou Formspree.
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const FORM_CONFIG = {
+      title: "Illyasaka — Application Form",
+      subtitle: "Answer clearly. Low effort gets ignored.",
+      submitUrl: "PASTE_YOUR_BACKEND_URL_HERE",
+      successMessage: "Submission received.",
+      errorMessage: "Submission failed. Try again later.",
+      questions: [
+        {
+          id: "discord",
+          type: "text",
+          label: "Discord / handle",
+          placeholder: "your @ or username",
+          required: true,
+          description: "Ton pseudo principal pour être recontacté.",
+        },
+        {
+          id: "age",
+          type: "number",
+          label: "Age",
+          placeholder: "18",
+          required: true,
+          description: "Réponse numérique uniquement.",
+        },
+        {
+          id: "country",
+          type: "select",
+          label: "Country / region",
+          required: true,
+          options: [
+            "France",
+            "Belgium",
+            "Switzerland",
+            "Canada",
+            "United States",
+            "United Kingdom",
+            "Other"
+          ]
+        },
+        {
+          id: "motivation",
+          type: "textarea",
+          label: "Why do you want to apply?",
+          placeholder: "Write a real answer.",
+          required: true,
+          description: "Explique ce que tu cherches, ce qui t'attire et ce que tu attends.",
+        },
+        {
+          id: "experience",
+          type: "radio",
+          label: "Experience level",
+          required: true,
+          options: [
+            "Beginner",
+            "Some experience",
+            "Experienced",
+            "Very experienced"
+          ]
+        },
+        {
+          id: "interests",
+          type: "checkbox",
+          label: "What interests you?",
+          required: false,
+          description: "Tu peux cocher plusieurs choix.",
+          options: [
+            "Private orders",
+            "VIP content",
+            "Long-term dynamic",
+            "Events / games",
+            "Silent sending",
+            "Other"
+          ]
+        },
+        {
+          id: "moodboard",
+          type: "image",
+          label: "Reference image",
+          imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80",
+          description: "Question purement visuelle : tu peux afficher une image sans champ de réponse.",
+        },
+        {
+          id: "reaction",
+          type: "textarea",
+          label: "Your reaction to the image above",
+          placeholder: "Describe what it makes you feel / think.",
+          required: false,
+        }
+      ]
+    };
+
+    const form = document.getElementById("dynamicForm");
+    const titleEl = document.getElementById("formTitle");
+    const subtitleEl = document.getElementById("formSubtitle");
+    const countEl = document.getElementById("questionCount");
+
+    titleEl.textContent = FORM_CONFIG.title;
+    subtitleEl.textContent = FORM_CONFIG.subtitle;
+
+    function escapeHtml(value = "") {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function renderQuestion(question) {
+      const wrapper = document.createElement("section");
+      wrapper.className = "question";
+      wrapper.dataset.type = question.type;
+
+      const requiredBadge = question.required ? '<span class="required">Required</span>' : "";
+      const desc = question.description ? `<div class="question-desc">${escapeHtml(question.description)}</div>` : "";
+      const title = `
+        <div class="question-title">
+          <h3>${escapeHtml(question.label || "Untitled question")}</h3>
+          ${requiredBadge}
+        </div>
+        ${desc}
+      `;
+
+      let fieldHtml = "";
+
+      switch (question.type) {
+        case "text":
+        case "email":
+        case "number":
+          fieldHtml = `
+            <input
+              type="${question.type}"
+              name="${escapeHtml(question.id)}"
+              placeholder="${escapeHtml(question.placeholder || "")}" 
+              ${question.required ? "required" : ""}
+            />
+          `;
+          break;
+
+        case "textarea":
+          fieldHtml = `
+            <textarea
+              name="${escapeHtml(question.id)}"
+              placeholder="${escapeHtml(question.placeholder || "")}" 
+              ${question.required ? "required" : ""}
+            ></textarea>
+          `;
+          break;
+
+        case "select":
+          fieldHtml = `
+            <select name="${escapeHtml(question.id)}" ${question.required ? "required" : ""}>
+              <option value="">Select an option</option>
+              ${(question.options || []).map(option => `
+                <option value="${escapeHtml(option)}">${escapeHtml(option)}</option>
+              `).join("")}
+            </select>
+          `;
+          break;
+
+        case "radio":
+          fieldHtml = `
+            <div class="choices">
+              ${(question.options || []).map((option, index) => `
+                <label class="choice">
+                  <input
+                    type="radio"
+                    name="${escapeHtml(question.id)}"
+                    value="${escapeHtml(option)}"
+                    ${question.required && index === 0 ? "required" : ""}
+                  />
+                  <span>${escapeHtml(option)}</span>
+                </label>
+              `).join("")}
+            </div>
+          `;
+          break;
+
+        case "checkbox":
+          fieldHtml = `
+            <div class="choices">
+              ${(question.options || []).map(option => `
+                <label class="choice">
+                  <input
+                    type="checkbox"
+                    name="${escapeHtml(question.id)}"
+                    value="${escapeHtml(option)}"
+                  />
+                  <span>${escapeHtml(option)}</span>
+                </label>
+              `).join("")}
+            </div>
+          `;
+          break;
+
+        case "image":
+          fieldHtml = `
+            ${question.imageUrl ? `<img class="question-image" src="${escapeHtml(question.imageUrl)}" alt="${escapeHtml(question.label || 'Question image')}" />` : ""}
+          `;
+          break;
+
+        default:
+          fieldHtml = `<div class="question-desc">Unsupported field type: ${escapeHtml(question.type)}</div>`;
+      }
+
+      wrapper.innerHTML = title + fieldHtml;
+      return wrapper;
+    }
+
+    function renderForm() {
+      form.innerHTML = "";
+
+      FORM_CONFIG.questions.forEach(question => {
+        form.appendChild(renderQuestion(question));
+      });
+
+      const interactiveCount = FORM_CONFIG.questions.filter(q => q.type !== "image").length;
+      countEl.textContent = `${interactiveCount} question${interactiveCount > 1 ? "s" : ""}`;
+
+      const actions = document.createElement("div");
+      actions.className = "actions";
+      actions.innerHTML = `
+        <div id="formStatus" class="status">Ready.</div>
+        <button class="submit-btn" type="submit">Submit</button>
+      `;
+      form.appendChild(actions);
+    }
+
+    function collectAnswers() {
+      const answers = {};
+
+      FORM_CONFIG.questions.forEach(question => {
+        if (question.type === "image") return;
+
+        if (question.type === "checkbox") {
+          const checked = [...document.querySelectorAll(`[name="${question.id}"]:checked`)];
+          answers[question.id] = checked.map(input => input.value);
+          return;
+        }
+
+        if (question.type === "radio") {
+          const selected = document.querySelector(`[name="${question.id}"]:checked`);
+          answers[question.id] = selected ? selected.value : "";
+          return;
+        }
+
+        const field = form.querySelector(`[name="${question.id}"]`);
+        answers[question.id] = field ? field.value : "";
+      });
+
+      return answers;
+    }
+
+    function validateCheckboxGroups() {
+      for (const question of FORM_CONFIG.questions) {
+        if (question.type === "checkbox" && question.required) {
+          const checked = document.querySelectorAll(`[name="${question.id}"]:checked`);
+          if (checked.length === 0) {
+            return `Please answer: ${question.label}`;
+          }
+        }
+      }
+      return null;
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const statusEl = document.getElementById("formStatus");
+      const submitBtn = form.querySelector("button[type='submit']");
+
+      const checkboxError = validateCheckboxGroups();
+      if (checkboxError) {
+        statusEl.textContent = checkboxError;
+        statusEl.className = "status error";
+        return;
+      }
+
+      if (!FORM_CONFIG.submitUrl || FORM_CONFIG.submitUrl.includes("PASTE_YOUR_BACKEND_URL_HERE")) {
+        statusEl.textContent = "Missing backend URL in FORM_CONFIG.submitUrl.";
+        statusEl.className = "status error";
+        return;
+      }
+
+      const payload = {
+        formTitle: FORM_CONFIG.title,
+        submittedAt: new Date().toISOString(),
+        pageUrl: window.location.href,
+        answers: collectAnswers()
+      };
+
+      submitBtn.disabled = true;
+      statusEl.textContent = "Sending...";
+      statusEl.className = "status";
+
+      try {
+        const response = await fetch(FORM_CONFIG.submitUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        statusEl.textContent = FORM_CONFIG.successMessage;
+        statusEl.className = "status success";
+        form.reset();
+      } catch (error) {
+        console.error(error);
+        statusEl.textContent = FORM_CONFIG.errorMessage;
+        statusEl.className = "status error";
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+
+    renderForm();
+  </script>
+</body>
+</html>
