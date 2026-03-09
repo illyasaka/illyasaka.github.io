@@ -699,60 +699,63 @@
       return null;
     }
 
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
 
-      const statusEl = document.getElementById("formStatus");
-      const submitBtn = form.querySelector("button[type='submit']");
+  const statusEl = document.getElementById("formStatus");
+  const submitBtn = form.querySelector("button[type='submit']");
 
-      const checkboxError = validateCheckboxGroups();
-      if (checkboxError) {
-        statusEl.textContent = checkboxError;
-        statusEl.className = "status error";
-        return;
-      }
+  const checkboxError = validateCheckboxGroups();
+  if (checkboxError) {
+    statusEl.textContent = checkboxError;
+    statusEl.className = "status error";
+    return;
+  }
 
-      if (!FORM_CONFIG.submitUrl || FORM_CONFIG.submitUrl.includes("https://script.google.com/macros/s/AKfycbxbMSHOoOczV_AiK1jDmsQaA01Jl36Mg-Z7ZycGJF1R9EQjyk93PW1ozskRD-MGhi-R/exec")) {
-        statusEl.textContent = "Missing backend URL in FORM_CONFIG.submitUrl.";
-        statusEl.className = "status error";
-        return;
-      }
+  if (!FORM_CONFIG.submitUrl || FORM_CONFIG.submitUrl.includes("https://script.google.com/macros/s/AKfycbxbMSHOoOczV_AiK1jDmsQaA01Jl36Mg-Z7ZycGJF1R9EQjyk93PW1ozskRD-MGhi-R/exec")) {
+    statusEl.textContent = "Missing backend URL in FORM_CONFIG.submitUrl.";
+    statusEl.className = "status error";
+    return;
+  }
 
-      const payload = {
-        formTitle: FORM_CONFIG.title,
-        submittedAt: new Date().toISOString(),
-        pageUrl: window.location.href,
-        answers: collectAnswers()
-      };
+  const payload = {
+    formTitle: FORM_CONFIG.title,
+    submittedAt: new Date().toISOString(),
+    pageUrl: window.location.href,
+    answers: collectAnswers()
+  };
 
-      submitBtn.disabled = true;
-      statusEl.textContent = "Sending...";
-      statusEl.className = "status";
+  submitBtn.disabled = true;
+  statusEl.textContent = "Sending...";
+  statusEl.className = "status";
 
-      try {
-        const response = await fetch(FORM_CONFIG.submitUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "text/plain;charset=utf-8"
-        },
-        body: JSON.stringify(payload)
-      });
-
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`);
-        }
-
-        statusEl.textContent = FORM_CONFIG.successMessage;
-        statusEl.className = "status success";
-        form.reset();
-      } catch (error) {
-        console.error(error);
-        statusEl.textContent = FORM_CONFIG.errorMessage;
-        statusEl.className = "status error";
-      } finally {
-        submitBtn.disabled = false;
-      }
+  try {
+    const response = await fetch(FORM_CONFIG.submitUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify(payload),
+      redirect: "follow"
     });
+
+    const text = await response.text();
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status} - ${text}`);
+    }
+
+    statusEl.textContent = FORM_CONFIG.successMessage;
+    statusEl.className = "status success";
+    form.reset();
+  } catch (error) {
+    console.error(error);
+    statusEl.textContent = String(error);
+    statusEl.className = "status error";
+  } finally {
+    submitBtn.disabled = false;
+  }
+});
 
     renderForm();
   </script>
