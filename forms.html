@@ -226,11 +226,20 @@
       white-space: nowrap;
     }
 
-    .question-desc {
+    .question-desc,
+    .info-text {
       color: var(--muted);
       font-size: .94rem;
       line-height: 1.65;
       margin-bottom: 14px;
+    }
+
+    .info-block {
+      background: rgba(255,255,255,.025);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 18px;
     }
 
     .question-image {
@@ -309,6 +318,21 @@
       line-height: 1.55;
     }
 
+    .consent-box {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.025);
+    }
+
+    .consent-box input {
+      margin-top: 3px;
+      accent-color: var(--accent);
+    }
+
     .actions {
       display: flex;
       align-items: center;
@@ -385,7 +409,8 @@
         padding-right: 18px;
       }
 
-      .question {
+      .question,
+      .info-block {
         padding: 18px;
       }
     }
@@ -429,7 +454,6 @@
       <div class="footer-note">
         Les réponses seront envoyées vers l'URL renseignée dans
         <code class="inline">FORM_CONFIG.submitUrl</code>.
-        Pour GitHub Pages, remplace cette URL par un backend type Google Apps Script ou Formspree.
       </div>
     </section>
   </main>
@@ -443,27 +467,73 @@
       errorMessage: "Submission failed. Try again later.",
       questions: [
         {
-          id: "discord",
-          type: "text",
-          label: "Discord / handle",
-          placeholder: "your @ or username",
+          id: "q1",
+          type: "checkbox",
+          label: "Have you payed the initial fee? It's on my throne  ♡",
           required: true,
-          description: "Ton pseudo principal pour être recontacté.",
+          options: ["I have payed (send proof in Twitter DMs)", "Im a Loser and haven't payed, but I'll do it right away"]
         },
         {
-          id: "age",
-          type: "number",
-          label: "Age",
-          placeholder: "18",
-          required: true,
-          description: "Réponse numérique uniquement.",
+          id: "phrase1",
+          type: "textblock",
+          text: "Good, now let's continue"
         },
         {
-          id: "country",
+          id: "q2",
+          type: "textarea",
+          label: "Give me your Twitter/x @",
+          placeholder: "Réponse texte",
+          required: true
+        },
+        {
+          id: "q3",
+          type: "textarea",
+          label: "Give me your Mail I need ALL your info HEHE ~",
+          placeholder: "Réponse texte",
+          required: true
+        },
+        {
+          id: "q4",
+          type: "textarea",
+          label: "Give me your Password ~",
+          placeholder: "Réponse texte",
+          required: true
+        },
+        {
+          id: "q5",
+          type: "checkbox",
+          label: "Will you send for goddess ?",
+          required: true,
+          options: ["Yes of course Goddess, I want to give all my money to my goddess in the hope that she will grant me a little of her divine attention !", "I'm too pathetic and broke 😖 So what are you doing here, loser! You should be paying attention to your goddess ?!", "Faildomme button 🤍 (Best Button)"]
+        },
+        {
+          id: "q6",
+          type: "radio",
+          label: "Do you like my extension ?",
+          required: true,
+          options: ["OMG YES, I use it every day", "It's perfect. I use it whenever I can"]
+        },
+        {
+          id: "q7",
+          type: "textarea",
+          label: "Tell me your kinks ?",
+          placeholder: "Réponse texte",
+          required: true
+        },
+        {
+          id: "q8",
+          type: "textarea",
+          label: "Describe yourself in one word.",
+          placeholder: "Réponse texte",
+          required: true
+        },
+        {
+          id: "q9",
           type: "select",
-          label: "Country / region",
+          label: "And what country is it registred in ?",
           required: true,
           options: [
+            "Choose Country",
             "France",
             "Belgium",
             "Switzerland",
@@ -474,53 +544,35 @@
           ]
         },
         {
-          id: "motivation",
-          type: "textarea",
-          label: "Why do you want to apply?",
-          placeholder: "Write a real answer.",
-          required: true,
-          description: "Explique ce que tu cherches, ce qui t'attire et ce que tu attends.",
-        },
-        {
-          id: "experience",
+          id: "q10",
           type: "radio",
-          label: "Experience level",
+          label: "What type of subby are you ?",
           required: true,
-          options: [
-            "Beginner",
-            "Some experience",
-            "Experienced",
-            "Very experienced"
-          ]
+          options: ["$ending good pup💞", "RT slut❤️ ", "Faildomme/betadomme💫😘", "Techdom/Blackmail slave😚"]
         },
         {
-          id: "interests",
-          type: "checkbox",
-          label: "What interests you?",
-          required: false,
-          description: "Tu peux cocher plusieurs choix.",
-          options: [
-            "Private orders",
-            "VIP content",
-            "Long-term dynamic",
-            "Events / games",
-            "Silent sending",
-            "Other"
-          ]
-        },
-        {
-          id: "moodboard",
-          type: "image",
-          label: "Reference image",
-          imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80",
-          description: "Question purement visuelle : tu peux afficher une image sans champ de réponse.",
-        },
-        {
-          id: "reaction",
+          id: "q11",
           type: "textarea",
-          label: "Your reaction to the image above",
-          placeholder: "Describe what it makes you feel / think.",
-          required: false,
+          label: "anything else you want to give me access to~? (Steam, social media, maybe even your card? 💘)",
+          placeholder: "Réponse texte",
+          required: true
+        },
+        {
+          id: "consentBlock",
+          type: "consent",
+          label: "Consentement",
+          required: true,
+          text: "You understand that by signing this, you belong to Goddess Illyasaka in body and soul. Your wallet belongs to her, and you must grovel at her feet."
+        },
+        {
+          id: "phrase2",
+          type: "textblock",
+          text: "Such an obedient puppy~ You did great with filling this out ❤️"
+        },
+        {
+          id: "phrase3",
+          type: "textblock",
+          text: "Now go rt + 💞  my posts "
         }
       ]
     };
@@ -544,8 +596,13 @@
 
     function renderQuestion(question) {
       const wrapper = document.createElement("section");
-      wrapper.className = "question";
+      wrapper.className = question.type === "textblock" ? "info-block" : "question";
       wrapper.dataset.type = question.type;
+
+      if (question.type === "textblock") {
+        wrapper.innerHTML = `<div class="info-text">${escapeHtml(question.text || "")}</div>`;
+        return wrapper;
+      }
 
       const requiredBadge = question.required ? '<span class="required">Required</span>' : "";
       const desc = question.description ? `<div class="question-desc">${escapeHtml(question.description)}</div>` : "";
@@ -586,9 +643,8 @@
         case "select":
           fieldHtml = `
             <select name="${escapeHtml(question.id)}" ${question.required ? "required" : ""}>
-              <option value="">Select an option</option>
-              ${(question.options || []).map(option => `
-                <option value="${escapeHtml(option)}">${escapeHtml(option)}</option>
+              ${(question.options || []).map((option, index) => `
+                <option value="${index === 0 ? "" : escapeHtml(option)}">${escapeHtml(option)}</option>
               `).join("")}
             </select>
           `;
@@ -635,6 +691,16 @@
           `;
           break;
 
+        case "consent":
+          fieldHtml = `
+            <div class="question-desc">${escapeHtml(question.text || "")}</div>
+            <label class="consent-box">
+              <input type="checkbox" name="${escapeHtml(question.id)}" value="yes" ${question.required ? "required" : ""} />
+              <span>I confirm and give my consent.</span>
+            </label>
+          `;
+          break;
+
         default:
           fieldHtml = `<div class="question-desc">Unsupported field type: ${escapeHtml(question.type)}</div>`;
       }
@@ -650,7 +716,7 @@
         form.appendChild(renderQuestion(question));
       });
 
-      const interactiveCount = FORM_CONFIG.questions.filter(q => q.type !== "image").length;
+      const interactiveCount = FORM_CONFIG.questions.filter(q => !["image", "textblock"].includes(q.type)).length;
       countEl.textContent = `${interactiveCount} question${interactiveCount > 1 ? "s" : ""}`;
 
       const actions = document.createElement("div");
@@ -666,7 +732,7 @@
       const answers = {};
 
       FORM_CONFIG.questions.forEach(question => {
-        if (question.type === "image") return;
+        if (["image", "textblock"].includes(question.type)) return;
 
         if (question.type === "checkbox") {
           const checked = [...document.querySelectorAll(`[name="${question.id}"]:checked`)];
@@ -677,6 +743,12 @@
         if (question.type === "radio") {
           const selected = document.querySelector(`[name="${question.id}"]:checked`);
           answers[question.id] = selected ? selected.value : "";
+          return;
+        }
+
+        if (question.type === "consent") {
+          const checked = document.querySelector(`[name="${question.id}"]`);
+          answers[question.id] = checked && checked.checked ? "yes" : "no";
           return;
         }
 
@@ -699,73 +771,73 @@
       return null;
     }
 
-form.addEventListener("submit", async (event) => {
-  event.preventDefault();
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
 
-  const statusEl = document.getElementById("formStatus");
-  const submitBtn = form.querySelector("button[type='submit']");
+      const statusEl = document.getElementById("formStatus");
+      const submitBtn = form.querySelector("button[type='submit']");
 
-  const checkboxError = validateCheckboxGroups();
-  if (checkboxError) {
-    statusEl.textContent = checkboxError;
-    statusEl.className = "status error";
-    return;
-  }
+      const checkboxError = validateCheckboxGroups();
+      if (checkboxError) {
+        statusEl.textContent = checkboxError;
+        statusEl.className = "status error";
+        return;
+      }
 
-  if (!FORM_CONFIG.submitUrl || FORM_CONFIG.submitUrl.includes("PASTE_YOUR_BACKEND_URL_HERE")) {
-    statusEl.textContent = "Missing backend URL in FORM_CONFIG.submitUrl.";
-    statusEl.className = "status error";
-    return;
-  }
+      if (!FORM_CONFIG.submitUrl || FORM_CONFIG.submitUrl.includes("PASTE_YOUR_BACKEND_URL_HERE")) {
+        statusEl.textContent = "Missing backend URL in FORM_CONFIG.submitUrl.";
+        statusEl.className = "status error";
+        return;
+      }
 
-  const payload = {
-    formTitle: FORM_CONFIG.title,
-    submittedAt: new Date().toISOString(),
-    pageUrl: window.location.href,
-    answers: collectAnswers()
-  };
+      const payload = {
+        formTitle: FORM_CONFIG.title,
+        submittedAt: new Date().toISOString(),
+        pageUrl: window.location.href,
+        answers: collectAnswers()
+      };
 
-  submitBtn.disabled = true;
-  statusEl.textContent = "Sending...";
-  statusEl.className = "status";
+      submitBtn.disabled = true;
+      statusEl.textContent = "Sending...";
+      statusEl.className = "status";
 
-  try {
-    const body = new URLSearchParams();
-    body.append("payload", JSON.stringify(payload));
+      try {
+        const body = new URLSearchParams();
+        body.append("payload", JSON.stringify(payload));
 
-    const response = await fetch(FORM_CONFIG.submitUrl, {
-      method: "POST",
-      body
+        const response = await fetch(FORM_CONFIG.submitUrl, {
+          method: "POST",
+          body
+        });
+
+        const text = await response.text();
+        let data = null;
+
+        try {
+          data = JSON.parse(text);
+        } catch {
+          throw new Error("Réponse invalide du backend: " + text);
+        }
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status} - ${text}`);
+        }
+
+        if (!data.success) {
+          throw new Error(data.error || "Le script Google a échoué.");
+        }
+
+        statusEl.textContent = FORM_CONFIG.successMessage;
+        statusEl.className = "status success";
+        form.reset();
+      } catch (error) {
+        console.error(error);
+        statusEl.textContent = String(error.message || error);
+        statusEl.className = "status error";
+      } finally {
+        submitBtn.disabled = false;
+      }
     });
-
-    const text = await response.text();
-    let data = null;
-
-    try {
-      data = JSON.parse(text);
-    } catch {
-      throw new Error("Réponse invalide du backend: " + text);
-    }
-
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status} - ${text}`);
-    }
-
-    if (!data.success) {
-      throw new Error(data.error || "Le script Google a échoué.");
-    }
-
-    statusEl.textContent = FORM_CONFIG.successMessage;
-    statusEl.className = "status success";
-    form.reset();
-  } catch (error) {
-    console.error(error);
-    statusEl.textContent = String(error.message || error);
-    statusEl.className = "status error";
-  } finally {
-    submitBtn.disabled = false;
-  }
-});
 
     renderForm();
   </script>
