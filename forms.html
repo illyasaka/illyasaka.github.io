@@ -739,9 +739,20 @@ form.addEventListener("submit", async (event) => {
     });
 
     const text = await response.text();
+    let data = null;
+
+    try {
+      data = JSON.parse(text);
+    } catch {
+      throw new Error("Réponse invalide du backend: " + text);
+    }
 
     if (!response.ok) {
       throw new Error(`HTTP ${response.status} - ${text}`);
+    }
+
+    if (!data.success) {
+      throw new Error(data.error || "Le script Google a échoué.");
     }
 
     statusEl.textContent = FORM_CONFIG.successMessage;
@@ -749,7 +760,7 @@ form.addEventListener("submit", async (event) => {
     form.reset();
   } catch (error) {
     console.error(error);
-    statusEl.textContent = String(error);
+    statusEl.textContent = String(error.message || error);
     statusEl.className = "status error";
   } finally {
     submitBtn.disabled = false;
