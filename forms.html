@@ -699,40 +699,60 @@
       return null;
     }
 
-function doPost(e) {
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const statusEl = document.getElementById("formStatus");
+  const submitBtn = form.querySelector("button[type='submit']");
+
+  const checkboxError = validateCheckboxGroups();
+  if (checkboxError) {
+    statusEl.textContent = checkboxError;
+    statusEl.className = "status error";
+    return;
+  }
+
+  if (!FORM_CONFIG.submitUrl || FORM_CONFIG.submitUrl.includes("PASTE_YOUR_BACKEND_URL_HERE")) {
+    statusEl.textContent = "Missing backend URL in FORM_CONFIG.submitUrl.";
+    statusEl.className = "status error";
+    return;
+  }
+
+  const payload = {
+    formTitle: FORM_CONFIG.title,
+    submittedAt: new Date().toISOString(),
+    pageUrl: window.location.href,
+    answers: collectAnswers()
+  };
+
+  submitBtn.disabled = true;
+  statusEl.textContent = "Sending...";
+  statusEl.className = "status";
+
   try {
-    const sheet = SpreadsheetApp
-      .openById("1xvVPn7rhw4VpqpYt0cIVt4pInXe5SQOA-Et7q4v9Nag")
-      .getSheetByName("Responses");
+    const body = new URLSearchParams();
+    body.append("payload", JSON.stringify(payload));
 
-    const raw = e.parameter.payload || "{}";
-    const data = JSON.parse(raw);
+    const response = await fetch(FORM_CONFIG.submitUrl, {
+      method: "POST",
+      body
+    });
 
-    const safe = (value) => {
-      if (value === null || value === undefined) return "";
-      const str = String(value);
-      if (/^[=+\-@]/.test(str)) return "'" + str;
-      return str;
-    };
+    const text = await response.text();
 
-    sheet.appendRow([
-      new Date(),
-      safe(data.formTitle || ""),
-      safe(data.pageUrl || ""),
-      safe(JSON.stringify(data.answers || {}))
-    ]);
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status} - ${text}`);
+    }
 
-    return ContentService
-      .createTextOutput(JSON.stringify({ success: true }))
-      .setMimeType(ContentService.MimeType.JSON);
-
+    statusEl.textContent = FORM_CONFIG.successMessage;
+    statusEl.className = "status success";
+    form.reset();
   } catch (error) {
-    return ContentService
-      .createTextOutput(JSON.stringify({
-        success: false,
-        error: String(error)
-      }))
-      .setMimeType(ContentService.MimeType.JSON);
+    console.error(error);
+    statusEl.textContent = String(error);
+    statusEl.className = "status error";
+  } finally {
+    submitBtn.disabled = false;
   }
 });
 
