@@ -234,6 +234,58 @@
       margin-bottom: 14px;
     }
 
+    .info-text {
+      font-size: 1.18rem;
+      line-height: 1.8;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: .01em;
+    }
+
+    .field-short {
+      min-height: auto;
+      height: 52px;
+      resize: none;
+    }
+
+    .content-image-block {
+      margin-bottom: 18px;
+      background: rgba(255,255,255,.025);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 22px;
+      padding: 18px;
+    }
+
+    .content-image-title {
+      margin: 0 0 12px;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .content-image {
+      width: 100%;
+      display: block;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.08);
+      max-height: 540px;
+      object-fit: cover;
+    }
+
+    .content-image-caption {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: .92rem;
+      line-height: 1.6;
+    }
+
+    .question-desc,
+    .info-text {
+      color: var(--muted);
+      font-size: .94rem;
+      line-height: 1.65;
+      margin-bottom: 14px;
+    }
+
     .info-block {
       background: rgba(255,255,255,.025);
       border: 1px solid rgba(255,255,255,.07);
@@ -468,92 +520,188 @@
       questions: [
         {
           id: "q1",
-          type: "radio",
-          label: "Have you payed the initial fee? It's on my throne  ♡",
+          type: "checkbox",
+          label: "Question 1",
           required: true,
-          options: ["I have payed (send proof in Twitter DMs)", "Im a Loser and haven't payed, but I'll do it right away"]
+          options: ["Answer 1", "Answer 2"]
         },
         {
           id: "phrase1",
           type: "textblock",
-          text: "Good, now let's continue"
+          text: "Phrase 1"
+        },
+        {
+          id: "image1",
+          type: "displayImage",
+          label: "Image block",
+          imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80",
+          caption: "Optional image caption"
         },
         {
           id: "q2",
-          type: "textarea",
-          label: "Give me your Twitter/x @",
+          type: "textline",
+          label: "Question 2",
           placeholder: "Réponse texte",
           required: true
         },
         {
           id: "q3",
           type: "textarea",
-          label: "Give me your Mail I need ALL your info HEHE ~",
+          label: "Question 3",
           placeholder: "Réponse texte",
           required: true
         },
         {
           id: "q4",
-          type: "textarea",
-          label: "Give me your Password ~",
+          type: "textline",
+          label: "Question 4",
           placeholder: "Réponse texte",
           required: true
         },
         {
           id: "q5",
           type: "checkbox",
-          label: "Will you send for goddess ?",
+          label: "Question 5",
           required: true,
-          options: ["Yes of course Goddess, I want to give all my money to my goddess in the hope that she will grant me a little of her divine attention !", "I'm too pathetic and broke 😖 So what are you doing here, loser! You should be paying attention to your goddess ?!", "Faildomme button 🤍 (Best Button)"]
+          options: ["Answer 1", "Answer 2", "Answer 3"]
         },
         {
           id: "q6",
           type: "radio",
-          label: "Do you like my extension ?",
+          label: "Question 6",
           required: true,
-          options: ["OMG YES, I use it every day", "It's perfect. I use it whenever I can"]
+          options: ["Answer 1", "Answer 2"]
         },
         {
           id: "q7",
           type: "textarea",
-          label: "Tell me your kinks ?",
+          label: "Question 7",
           placeholder: "Réponse texte",
           required: true
         },
         {
           id: "q8",
-          type: "textarea",
-          label: "Describe yourself in one word.",
+          type: "textline",
+          label: "Question 8",
           placeholder: "Réponse texte",
           required: true
         },
         {
           id: "q9",
           type: "select",
-          label: "And what country is it registred in ?",
+          label: "Question 9",
           required: true,
           options: [
             "Choose Country",
-            "France",
-            "Belgium",
-            "Switzerland",
-            "Canada",
             "United States",
+            "Albania",
+            "Algeria",
+            "Argentina",
+            "Armenia",
+            "Austria",
+            "Azerbaijan",
+            "Bahrain",
+            "Belarus",
+            "Belgium",
+            "Bolivia",
+            "Bosnia and Herzegovina",
+            "Brazil",
+            "Bulgaria",
+            "Canada",
+            "Chile",
+            "China",
+            "Colombia",
+            "Croatia",
+            "Cyprus",
+            "Czech Republic",
+            "Denmark",
+            "Ecuador",
+            "Egypt",
+            "Estonia",
+            "Finland",
+            "France",
+            "Georgia",
+            "Germany",
+            "Greece",
+            "Hungary",
+            "Iceland",
+            "India",
+            "Indonesia",
+            "Iran",
+            "Iraq",
+            "Ireland",
+            "Israel",
+            "Italy",
+            "Japan",
+            "Jordan",
+            "Kazakhstan",
+            "Kuwait",
+            "Kyrgyzstan",
+            "Latvia",
+            "Lebanon",
+            "Libya",
+            "Liechtenstein",
+            "Lithuania",
+            "Luxembourg",
+            "Malaysia",
+            "Malta",
+            "Mexico",
+            "Moldova",
+            "Monaco",
+            "Montenegro",
+            "Morocco",
+            "Netherlands",
+            "North Macedonia",
+            "Norway",
+            "Oman",
+            "Pakistan",
+            "Paraguay",
+            "Peru",
+            "Philippines",
+            "Poland",
+            "Portugal",
+            "Qatar",
+            "Romania",
+            "Russia",
+            "San Marino",
+            "Saudi Arabia",
+            "Serbia",
+            "Singapore",
+            "Slovakia",
+            "Slovenia",
+            "South Africa",
+            "South Korea",
+            "Spain",
+            "Sweden",
+            "Switzerland",
+            "Syria",
+            "Taiwan",
+            "Thailand",
+            "Tunisia",
+            "Turkey",
+            "Ukraine",
+            "United Arab Emirates",
             "United Kingdom",
+            "Uruguay",
+            "Uzbekistan",
+            "Vatican City",
+            "Venezuela",
+            "Vietnam",
+            "Yemen",
             "Other"
           ]
         },
         {
           id: "q10",
           type: "radio",
-          label: "What type of subby are you ?",
+          label: "Question 10",
           required: true,
-          options: ["$ending good pup💞", "RT slut❤️ ", "Faildomme/betadomme💫😘", "Techdom/Blackmail slave😚"]
+          options: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"]
         },
         {
           id: "q11",
           type: "textarea",
-          label: "anything else you want to give me access to~? (Steam, social media, maybe even your card? 💘)",
+          label: "Question 11",
           placeholder: "Réponse texte",
           required: true
         },
@@ -562,17 +710,24 @@
           type: "consent",
           label: "Consentement",
           required: true,
-          text: "You understand that by signing this, you belong to Goddess Illyasaka in body and soul. Your wallet belongs to her, and you must grovel at her feet."
+          text: "Texte + checkbox de consentement a cocher pour que le formulaire puisse être envoyé"
         },
         {
           id: "phrase2",
           type: "textblock",
-          text: "Such an obedient puppy~ You did great with filling this out ❤️"
+          text: "Phrase 2"
+        },
+        {
+          id: "image2",
+          type: "displayImage",
+          label: "Image block",
+          imageUrl: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1200&q=80",
+          caption: "Optional image caption"
         },
         {
           id: "phrase3",
           type: "textblock",
-          text: "Now go rt + 💞  my posts "
+          text: "Phrase 3"
         }
       ]
     };
@@ -604,6 +759,16 @@
         return wrapper;
       }
 
+      if (question.type === "displayImage") {
+        wrapper.className = "content-image-block";
+        wrapper.innerHTML = `
+          ${question.label ? `<h3 class="content-image-title">${escapeHtml(question.label)}</h3>` : ""}
+          ${question.imageUrl ? `<img class="content-image" src="${escapeHtml(question.imageUrl)}" alt="${escapeHtml(question.label || 'Displayed image')}" />` : ""}
+          ${question.caption ? `<div class="content-image-caption">${escapeHtml(question.caption)}</div>` : ""}
+        `;
+        return wrapper;
+      }
+
       const requiredBadge = question.required ? '<span class="required">Required</span>' : "";
       const desc = question.description ? `<div class="question-desc">${escapeHtml(question.description)}</div>` : "";
       const title = `
@@ -630,7 +795,29 @@
           `;
           break;
 
+        case "textline":
+          fieldHtml = `
+            <input
+              type="text"
+              name="${escapeHtml(question.id)}"
+              placeholder="${escapeHtml(question.placeholder || "")}" 
+              ${question.required ? "required" : ""}
+            />
+          `;
+          break;
+
         case "textarea":
+          fieldHtml = `
+            <textarea
+              class="${question.type === "textline" ? "field-short" : ""}"
+              name="${escapeHtml(question.id)}"
+              placeholder="${escapeHtml(question.placeholder || "")}" 
+              ${question.required ? "required" : ""}
+            ></textarea>
+          `;
+          break;
+
+        case "textarea_unused_marker":
           fieldHtml = `
             <textarea
               name="${escapeHtml(question.id)}"
@@ -716,7 +903,7 @@
         form.appendChild(renderQuestion(question));
       });
 
-      const interactiveCount = FORM_CONFIG.questions.filter(q => !["image", "textblock"].includes(q.type)).length;
+      const interactiveCount = FORM_CONFIG.questions.filter(q => !["image", "textblock", "displayImage"].includes(q.type)).length;
       countEl.textContent = `${interactiveCount} question${interactiveCount > 1 ? "s" : ""}`;
 
       const actions = document.createElement("div");
@@ -732,7 +919,7 @@
       const answers = {};
 
       FORM_CONFIG.questions.forEach(question => {
-        if (["image", "textblock"].includes(question.type)) return;
+        if (["image", "textblock", "displayImage"].includes(question.type)) return;
 
         if (question.type === "checkbox") {
           const checked = [...document.querySelectorAll(`[name="${question.id}"]:checked`)];
