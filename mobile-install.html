@@ -906,6 +906,51 @@
     .guidePanel{ position:relative; top:auto; }
   }
 
+  /* ===== Top download buttons ===== */
+  .topDownloadBox{
+    margin: 10px auto 30px;
+    max-width: 920px;
+    border-radius: 30px;
+    border: 1px solid rgba(255,46,166,.42);
+    background:
+      radial-gradient(520px 240px at 20% 0%, rgba(255,46,166,.24), transparent 65%),
+      radial-gradient(520px 240px at 86% 20%, rgba(34,211,238,.16), transparent 70%),
+      linear-gradient(180deg, rgba(12,12,18,.78), rgba(10,10,14,.56));
+    box-shadow: 0 28px 100px rgba(255,46,166,.12), var(--shadow2);
+    padding: 20px;
+  }
+  .topDownloadTitle{
+    text-align:center;
+    font-size: clamp(20px, 2.8vw, 34px);
+    line-height:1.1;
+    font-weight: 980;
+    letter-spacing:-.35px;
+    margin: 0 0 14px;
+  }
+  .topDownloadActions{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .topDownloadActions .btn{
+    width:100%;
+    padding: 20px 18px;
+    border-radius: 20px;
+    font-size: clamp(17px, 2.2vw, 24px);
+    font-weight: 1000;
+    letter-spacing:.25px;
+  }
+  .btn.pcDownload{
+    background: linear-gradient(180deg, rgba(255,46,166,.68), rgba(139,92,246,.28));
+    border-color: rgba(255,46,166,.70);
+    box-shadow: 0 22px 70px rgba(255,46,166,.18), 0 18px 60px rgba(0,0,0,.45);
+  }
+  .btn.mobileDownload{
+    background: linear-gradient(180deg, rgba(34,211,238,.54), rgba(255,46,166,.22));
+    border-color: rgba(34,211,238,.55);
+    box-shadow: 0 22px 70px rgba(34,211,238,.14), 0 18px 60px rgba(0,0,0,.45);
+  }
+
 </style>
 </head>
 <body>
@@ -922,9 +967,17 @@
     <div class="ctaRow">
       <a class="btn" href="index.html">← Back home</a>
       <a class="btn" href="https://x.com/Illyasaka" target="_blank" rel="noreferrer">x.com</a>
-      <a class="btn primary" href="https://gofile.io/d/qddDT5" target="_blank" rel="noreferrer">Download Extension</a>
+      <a class="btn primary" href="https://gofile.io/d/qddDT5" target="_blank" rel="noreferrer">Download Extension ZIP (Mobile)</a>
     </div>
   </div>
+
+  <section class="topDownloadBox" aria-label="Extension downloads">
+    <h2 class="topDownloadTitle">Download the extension ZIP</h2>
+    <div class="topDownloadActions">
+      <a class="btn pcDownload" href="https://gofile.io/d/8XGgH5" target="_blank" rel="noreferrer">💻 Download Extension ZIP (PC)</a>
+      <a class="btn mobileDownload" href="https://gofile.io/d/qddDT5" target="_blank" rel="noreferrer">📱 Download Extension ZIP (Mobile)</a>
+    </div>
+  </section>
 
   <section class="guideHero">
     <div class="kicker"><span class="dot"></span> Phone setup. Simplified.</div>
