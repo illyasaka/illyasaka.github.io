@@ -1,0 +1,10 @@
+{
+  "source": "https://x.com/Illyasaka",
+  "note": "Profile artwork and two additional post portraits integrated at the user's request, using the direct image URLs supplied in chat.",
+  "assets": [
+    {"file": "illyasaka-portrait.jpg", "url": "https://pbs.twimg.com/profile_images/1952353280756948992/1WcEAfSt.jpg"},
+    {"file": "illyasaka-banner.jpg", "url": "https://pbs.twimg.com/profile_banners/1952343338176372736/1791239773/1080x360"},
+    {"file": "post-01.jpg", "url": "https://pbs.twimg.com/media/HU_pl3FWAAA5oTI?format=jpg&name=small"},
+    {"file": "post-08.jpg", "url": "https://pbs.twimg.com/media/HQLFq68WUAA6zxY?format=jpg&name=medium"}
+  ]
+}
